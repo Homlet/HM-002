@@ -29,6 +29,4 @@
 //  DECLARATIONS
 // ----------------------------------------------------------------------------
 
-renderhandler::Renderer renderer;
-
 int initializeWindow( void );

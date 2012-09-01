@@ -4,7 +4,6 @@
 #include "Main.h"
 
 
-
 int main(int argc, char* argv[])
 {
 	int running = GL_TRUE;
@@ -25,8 +24,10 @@ int main(int argc, char* argv[])
 		glfwTerminate();
 		exit( EXIT_FAILURE );
 	}
-	
-	renderer.initializeRenderer();
+
+	std::cout << "GLEW successfully initialised" << std::endl;
+
+	renderhandler::Renderer renderer;
 
 	// Main game loop
 	while ( running )

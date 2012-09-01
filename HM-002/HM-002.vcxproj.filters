@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Render">
       <UniqueIdentifier>{7636b459-0332-4ffc-8d65-6da028679a2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shader">
+      <UniqueIdentifier>{a898c3e8-b74c-41ba-b0cd-f2ff7b609d15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -41,5 +44,13 @@
     <ClInclude Include="RenderHandler.h">
       <Filter>Header Files\Render</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader.vert">
+      <Filter>Source Files\Shader</Filter>
+    </None>
+    <None Include="shader.frag">
+      <Filter>Source Files\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
