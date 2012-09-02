@@ -66,14 +66,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="RenderHandler.cpp" />
+    <ClCompile Include="Buffer.cpp" />
+    <ClCompile Include="Handler.cpp" />
+    <ClCompile Include="Matrices.cpp" />
+    <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Render.h" />
-    <ClInclude Include="RenderHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />

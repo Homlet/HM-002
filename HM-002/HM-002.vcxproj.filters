@@ -16,19 +16,31 @@
     <Filter Include="Source Files\Render">
       <UniqueIdentifier>{24e792ca-fe82-4905-b3d0-92a4fa71c0a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Render">
-      <UniqueIdentifier>{7636b459-0332-4ffc-8d65-6da028679a2a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Shader">
       <UniqueIdentifier>{a898c3e8-b74c-41ba-b0cd-f2ff7b609d15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Render\utils">
+      <UniqueIdentifier>{8a0875af-415e-4bb9-b672-8268f6e1f7f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RenderHandler.cpp">
+    <ClCompile Include="Handler.cpp">
       <Filter>Source Files\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Source Files\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrices.cpp">
+      <Filter>Source Files\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Source Files\Render\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,10 +51,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Render.h">
-      <Filter>Header Files\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderHandler.h">
-      <Filter>Header Files\Render</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

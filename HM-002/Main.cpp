@@ -27,14 +27,14 @@ int main(int argc, char* argv[])
 
 	std::cout << "GLEW successfully initialised\n\n";
 
-	renderhandler::Renderer renderer;
+	render::Handler renderhandler;
 
 	// Main game loop
 	while ( running )
 	{
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-		renderer.render();
+		renderhandler.render();
 
 		// Swap front and back buffers
 		glfwSwapBuffers();
@@ -56,10 +56,10 @@ int main(int argc, char* argv[])
 //
 int initializeWindow( void )
 {
-	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 4);
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MAJOR, 3);
-	glfwOpenWindowHint(GLFW_OPENGL_VERSION_MINOR, 3);
-	glfwOpenWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwOpenWindowHint( GLFW_FSAA_SAMPLES, 4 );
+	glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 3 );
+	glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR, 3 );
+	glfwOpenWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
 	glfwOpenWindowHint( GLFW_WINDOW_NO_RESIZE, GL_TRUE );
 
 	// Open window (attributes specified as macros)
@@ -72,7 +72,7 @@ int initializeWindow( void )
 		WIN_ALPHA_BITS,
 		WIN_DEPTH_BITS,
 		0,
-		GLFW_WINDOW
+		WIN_TYPE
 	);
 
 	if ( window )
