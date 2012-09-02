@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
 	if ( !glfwInit() )
 		exit( EXIT_FAILURE );
 
-	std::cout << "GLFW successfully initialised" << std::endl;
+	std::cout << "GLFW successfully initialised\n";
 
 	if ( !initializeWindow() )
 	{
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 		exit( EXIT_FAILURE );
 	}
 
-	std::cout << "GLEW successfully initialised" << std::endl;
+	std::cout << "GLEW successfully initialised\n\n";
 
 	renderhandler::Renderer renderer;
 
@@ -77,7 +77,7 @@ int initializeWindow( void )
 
 	if ( window )
 	{
-		std::cout << "Window successfully created" << std::endl;
+		std::cout << "Window successfully created\n";
 
 		glfwSetWindowTitle( WIN_TITLE );
 	}
