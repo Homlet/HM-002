@@ -1,12 +1,21 @@
 // "Main.cpp"
 //
 
+#include "Base.h"
+#include "Input.h"
+#include "Buffer.h"
+#include "Player.h"
+#include "Entity.h"
+#include "State.h"
+#include "Shader.h"
+#include "Matrices.h"
+#include "Handler.h"
 #include "Main.h"
 
 
 int main(int argc, char* argv[])
 {
-	int running = GL_TRUE;
+	int isRunning = GL_TRUE;
 
 	if ( !glfwInit() )
 		exit( EXIT_FAILURE );
@@ -27,20 +36,32 @@ int main(int argc, char* argv[])
 
 	std::cout << "GLEW successfully initialised\n\n";
 
+	double delta = 0.0, delta_old = 0.0;
+	update::State state;
+	update::Input input;
 	render::Handler renderhandler;
 
-	// Main game loop
-	while ( running )
-	{
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	glfwSetTime( 0.0 );
 
+	// Main game loop
+	while ( isRunning )
+	{
+		delta_old = delta;
+		delta = glfwGetTime() - delta_old;
+
+		// Poll mouse changes
+		input.poll();
+
+		// Run game logic for current state
+		state.update( delta, &input );
+
+		// Render
 		renderhandler.render();
 
-		// Swap front and back buffers
 		glfwSwapBuffers();
 
 		// Check for window close signal
-		running = !glfwGetKey( GLFW_KEY_ESC ) &&
+		isRunning = !glfwGetKey( GLFW_KEY_ESC ) &&
 		           glfwGetWindowParam( GLFW_OPENED );
 	}
 

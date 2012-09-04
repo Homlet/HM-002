@@ -1,24 +1,26 @@
 // "Cube.cpp"
 //
 
-#include "Render.h"
+#include "Base.h"
+#include "Buffer.h"
+#include "Cube.h"
 
-using namespace render::utils;
+using namespace render::buffer;
 
 
 // --------------------------------------------------------------------------------------------------------------------
 //  render::vertex vertex data
 //
-const render::vertex Cube::data[24] = {
+const render::vertex Cube::_data[24] = {
 //  | x    | y    | z   |___| r  | g  | b  | a  |
-	{-1.0f, -1.0f,  1.0f,     10, 100, 150, 255},
-	{ 1.0f, -1.0f,  1.0f,     20, 120, 100, 255},
-	{-1.0f,  1.0f,  1.0f,     30, 100, 150, 255},
-	{ 1.0f,  1.0f,  1.0f,     40, 100, 100, 255},
-	{-1.0f, -1.0f, -1.0f,     50, 120, 150, 255},
-	{ 1.0f, -1.0f, -1.0f,     60, 100, 100, 255},
-	{-1.0f,  1.0f, -1.0f,     70, 100, 150, 255},
-	{ 1.0f,  1.0f, -1.0f,     80, 120, 100, 255}
+	{-1.0f, -1.0f,  1.0f,    255, 255, 255, 255},
+	{ 1.0f, -1.0f,  1.0f,    255, 255, 255, 255},
+	{-1.0f,  1.0f,  1.0f,    255, 255, 255, 255},
+	{ 1.0f,  1.0f,  1.0f,    255, 255, 255, 255},
+	{-1.0f, -1.0f, -1.0f,    255, 255, 255, 255},
+	{ 1.0f, -1.0f, -1.0f,    255, 255, 255, 255},
+	{-1.0f,  1.0f, -1.0f,    255, 255, 255, 255},
+	{ 1.0f,  1.0f, -1.0f,    255, 255, 255, 255}
 //  | x    | y    | z   |___| r  | g  | b  | a  |
 };
 
@@ -26,7 +28,7 @@ const render::vertex Cube::data[24] = {
 // --------------------------------------------------------------------------------------------------------------------
 //  Unsigned short indices
 //
-const GLushort Cube::indices[14] = {
+const GLushort Cube::_indices[14] = {
 	0, 1, 2, 3, 7, 1, 5, 4, 7, 6, 2, 4, 0, 1
 };
 
@@ -36,6 +38,6 @@ const GLushort Cube::indices[14] = {
 //
 Cube::Cube( void )
 {
-	Buffer::setData( &data[0], sizeof ( data ) / sizeof ( vertex ) );
-	Buffer::setIndices( &indices[0], sizeof ( indices ) / sizeof ( GLushort ) );
+	Buffer::setData( &_data[0], sizeof ( _data ) / sizeof ( vertex ) );
+	Buffer::setIndices( &_indices[0], sizeof ( _indices ) / sizeof ( GLushort ) );
 }

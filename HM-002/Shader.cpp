@@ -1,7 +1,8 @@
 // "Shader.cpp"
 //
 
-#include "Render.h"
+#include "Base.h"
+#include "Shader.h"
 
 using namespace render;
 
@@ -10,7 +11,7 @@ using namespace render;
 //  Loads, compiles, check and links the shader files. Creates program
 //
 Shader::Shader( const char* vertFilePath, const char* fragFilePath ) :
-	programID( glCreateProgram() )
+	_programID( glCreateProgram() )
 {
 	GLuint vertID = glCreateShader( GL_VERTEX_SHADER );
 	GLuint fragID = glCreateShader( GL_FRAGMENT_SHADER );
@@ -74,22 +75,22 @@ Shader::Shader( const char* vertFilePath, const char* fragFilePath ) :
 
 	// Link program
 	fprintf( stdout, "Linking program\n" );
-	glAttachShader( programID, vertID );
-	glAttachShader( programID, fragID );
-	glLinkProgram( programID );
+	glAttachShader( _programID, vertID );
+	glAttachShader( _programID, fragID );
+	glLinkProgram( _programID );
 
 	// Check the program
-	glGetProgramiv( programID, GL_LINK_STATUS, &result );
-	glGetProgramiv( programID, GL_INFO_LOG_LENGTH, &infoLogLength );
+	glGetProgramiv( _programID, GL_LINK_STATUS, &result );
+	glGetProgramiv( _programID, GL_INFO_LOG_LENGTH, &infoLogLength );
 	std::vector<char> programErrorMessage( glm::max( infoLogLength, int( 1 ) ) );
-	glGetProgramInfoLog( programID, infoLogLength, 0, &programErrorMessage[0] );
+	glGetProgramInfoLog( _programID, infoLogLength, 0, &programErrorMessage[0] );
 	fprintf( stdout, "%s\n", &programErrorMessage[0] );
 	
 	glDeleteShader( vertID );
 	glDeleteShader( fragID );
 
 	// Setup uniforms
-	uniformLocationMatrix = glGetUniformLocation( programID, "MVP" );
+	_uniformLocationMatrix = glGetUniformLocation( _programID, "MVP" );
 }
 
 
@@ -98,7 +99,7 @@ Shader::Shader( const char* vertFilePath, const char* fragFilePath ) :
 //
 void Shader::bind( void ) const
 {
-	glUseProgram( programID );
+	glUseProgram( _programID );
 }
 
 
@@ -107,7 +108,7 @@ void Shader::bind( void ) const
 //
 void Shader::setUniforms( glm::mat4 MVP ) const
 {
-	glUniformMatrix4fv( uniformLocationMatrix, 1, GL_FALSE, &MVP[0][0] );
+	glUniformMatrix4fv( _uniformLocationMatrix, 1, GL_FALSE, &MVP[0][0] );
 }
 
 

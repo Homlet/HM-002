@@ -13,13 +13,25 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Render">
+    <Filter Include="Source Files\render">
       <UniqueIdentifier>{24e792ca-fe82-4905-b3d0-92a4fa71c0a7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Shader">
       <UniqueIdentifier>{a898c3e8-b74c-41ba-b0cd-f2ff7b609d15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Render\utils">
+    <Filter Include="Source Files\update">
+      <UniqueIdentifier>{bb8ec2b2-123a-466e-8eab-70db30da9626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\render">
+      <UniqueIdentifier>{01808ac9-da2d-4c95-aa3f-7a602deb3059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\update">
+      <UniqueIdentifier>{ca17529c-a6cd-42f4-abd9-f4491476784f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\render\buffer">
+      <UniqueIdentifier>{e3830e84-bc02-4970-9518-3f7743ef1899}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render\buffer">
       <UniqueIdentifier>{8a0875af-415e-4bb9-b672-8268f6e1f7f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -40,7 +52,19 @@
       <Filter>Source Files\Render</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>Source Files\Render\utils</Filter>
+      <Filter>Source Files\render\buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Source Files\update</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\update</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\update</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Source Files\update</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +74,32 @@
     <ClInclude Include="Main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\update</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\update</Filter>
+    </ClInclude>
+    <ClInclude Include="Handler.h">
+      <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrices.h">
+      <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\render\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\update</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Header Files\update</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

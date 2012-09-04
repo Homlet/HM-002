@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 #include <math.h>
 
@@ -15,6 +16,7 @@
 #include <GL/glfw.h>
 
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 
 // ----------------------------------------------------------------------------
@@ -44,22 +46,53 @@
 
 
 // ----------------------------------------------------------------------------
-//  DECLARATIONS
+//  FORWARD DECLARATIONS
 // ----------------------------------------------------------------------------
+
+namespace update
+{
+	class State;
+	class Input;
+	class Entity;
+	class Player;
+/*
+	class World;
+
+	namespace collide
+	{
+		class Sphere;
+		class AABB;
+	}
+	
+	namespace world
+	{
+		typedef struct {
+			const unsigned char type;
+			const unsigned char light;
+			bool isSolid() {
+				return false;
+			};
+		} block;
+
+		class Chunk;
+	}
+*/
+}
+
 
 namespace render
 {
 	typedef struct {
 		GLfloat x, y, z;
-		unsigned char r, g, b, a;
+		GLubyte r, g, b, a;
 	} vertex;
-
+	
 	class Handler;
 	class Shader;
-	class Buffer;
 	class Matrices;
+	class Buffer;
 
-	namespace utils
+	namespace buffer
 	{
 		class Cube;
 	}

@@ -1,7 +1,8 @@
 // "Buffer.cpp"
 //
 
-#include "Render.h"
+#include "Base.h"
+#include "Buffer.h"
 
 using namespace render;
 
@@ -11,20 +12,20 @@ using namespace render;
 //
 Buffer::Buffer( void )
 {
-	glGenBuffers( 1, &dataID );
-	glGenBuffers( 1, &indicesID );
+	glGenBuffers( 1, &_dataID );
+	glGenBuffers( 1, &_indicesID );
 }
 
 
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets buffer data
 //
-void Buffer::setData( const vertex* data, int count ) const
+void Buffer::setData( const vertex* data, int _count ) const
 {
 	bind();
 	glBufferData(
 		GL_ARRAY_BUFFER,
-		count * sizeof ( vertex ),
+		_count * sizeof ( vertex ),
 		data,
 		GL_STATIC_DRAW
 	);
@@ -35,13 +36,13 @@ void Buffer::setData( const vertex* data, int count ) const
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets buffer indices
 //
-void Buffer::setIndices( const GLushort* indices, int count )
+void Buffer::setIndices( const GLushort* indices, int _count )
 {
 	bind();
-	this->count = count;
+	this->_count = _count;
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,
-		count * sizeof ( GLushort ),
+		_count * sizeof ( GLushort ),
 		indices,
 		GL_STATIC_DRAW
 	);
@@ -54,8 +55,8 @@ void Buffer::setIndices( const GLushort* indices, int count )
 //
 void Buffer::bind( void ) const
 {
-	glBindBuffer( GL_ARRAY_BUFFER, dataID );
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, indicesID );
+	glBindBuffer( GL_ARRAY_BUFFER, _dataID );
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _indicesID );
 }
 
 
@@ -75,10 +76,10 @@ void Buffer::unbind( void )
 void Buffer::render( const GLint type ) const
 {
 	bind();
-	glEnableVertexAttribArray( attribLocationVertex );
-	glEnableVertexAttribArray( attribLocationColor );
+	glEnableVertexAttribArray( _attribLocationVertex );
+	glEnableVertexAttribArray( _attribLocationColor );
 	glVertexAttribPointer(
-		attribLocationVertex,
+		_attribLocationVertex,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
@@ -86,7 +87,7 @@ void Buffer::render( const GLint type ) const
 		(void*) 0
 	);
 	glVertexAttribPointer(
-		attribLocationColor,
+		_attribLocationColor,
 		4,
 		GL_UNSIGNED_BYTE,
 		GL_FALSE,
@@ -96,12 +97,12 @@ void Buffer::render( const GLint type ) const
 
 	glDrawElements(
 		type,
-		count,
+		_count,
 		GL_UNSIGNED_SHORT,
 		(void*) 0
 	);
 
-	glDisableVertexAttribArray( attribLocationVertex );
-	glDisableVertexAttribArray( attribLocationColor );
+	glDisableVertexAttribArray( _attribLocationVertex );
+	glDisableVertexAttribArray( _attribLocationColor );
 	unbind();
 }

@@ -42,6 +42,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>C:\Users\Sam\Documents\C++\glew-1.9.0\include;C:\Users\Sam\Documents\C++\glm-0.9.3.4;C:\Users\Sam\Documents\C++\glfw-2.7.6.bin.WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -67,16 +68,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Buffer.cpp" />
     <ClCompile Include="Handler.cpp" />
     <ClCompile Include="Matrices.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="State.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="Buffer.h" />
+    <ClInclude Include="Cube.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Handler.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Main.h" />
-    <ClInclude Include="Render.h" />
+    <ClInclude Include="Matrices.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="State.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />
