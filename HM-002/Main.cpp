@@ -4,6 +4,7 @@
 #include "Base.h"
 #include "Input.h"
 #include "Buffer.h"
+#include "Camera.h"
 #include "Player.h"
 #include "Entity.h"
 #include "State.h"
@@ -20,7 +21,7 @@ int main(int argc, char* argv[])
 	if ( !glfwInit() )
 		exit( EXIT_FAILURE );
 
-	std::cout << "GLFW successfully initialised\n";
+	fprintf( stdout, "GLFW successfully initialised.\n" );
 
 	if ( !initializeWindow() )
 	{
@@ -34,11 +35,13 @@ int main(int argc, char* argv[])
 		exit( EXIT_FAILURE );
 	}
 
-	std::cout << "GLEW successfully initialised\n\n";
+	fprintf( stdout, "GLEW successfully initialised." );
 
-	double delta = 0.0, delta_old = 0.0;
+	double delta = 0.0, frame = 0.0, frame_old = 0.0;
 	update::State state;
 	update::Input input;
+	update::keyinput::initializeKeyInput();
+	std::shared_ptr<update::Camera> camera = state.getCamera();
 	render::Handler renderhandler;
 
 	glfwSetTime( 0.0 );
@@ -46,23 +49,43 @@ int main(int argc, char* argv[])
 	// Main game loop
 	while ( isRunning )
 	{
-		delta_old = delta;
-		delta = glfwGetTime() - delta_old;
+		frame_old = frame;
+		frame = glfwGetTime();
+		delta = frame - frame_old;
 
 		// Poll mouse changes
 		input.poll();
+		update::keyinput::updateOldKeybuffer();
 
 		// Run game logic for current state
 		state.update( delta, &input );
 
 		// Render
-		renderhandler.render();
+		renderhandler.render( camera->getPosition(), camera->getLook() );
 
 		glfwSwapBuffers();
 
-		// Check for window close signal
-		isRunning = !glfwGetKey( GLFW_KEY_ESC ) &&
-		           glfwGetWindowParam( GLFW_OPENED );
+		if ( input.getMouseButton( GLFW_MOUSE_BUTTON_LEFT, true ) &&
+			!input.getMouseTrapped() )
+		{
+			input.trapMouse();
+		}
+
+		if ( update::keyinput::getKeyDown( GLFW_KEY_ESC, true ) &&
+			 input.getMouseTrapped() )
+		{
+			input.untrapMouse();
+		}
+
+		// Check for window close signal: "Esc + `" or "Esc + ~" (for American keyboards)
+		isRunning = !(
+		               update::keyinput::getKeyDown( GLFW_KEY_ESC ) &&
+		               (
+		                 update::keyinput::getKeyDown( '`' ) ||
+		                 update::keyinput::getKeyDown( '~' )
+		               )
+					) &&
+		            glfwGetWindowParam( GLFW_OPENED );
 	}
 
 	glfwTerminate();
@@ -98,7 +121,7 @@ int initializeWindow( void )
 
 	if ( window )
 	{
-		std::cout << "Window successfully created\n";
+		fprintf( stdout, "Window successfully created\n" );
 
 		glfwSetWindowTitle( WIN_TITLE );
 	}

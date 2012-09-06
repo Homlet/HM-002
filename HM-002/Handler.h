@@ -14,14 +14,12 @@ namespace render
 	private:
 		GLuint _vertexArrayID;
 
-		float _frame;
-
 		Shader   _shader;
 		Buffer   _buffer;
 		Matrices _matrices;
 	public:
 		Handler( void );
 
-		void render( void );
+		void render( glm::vec3 position, glm::vec3 look );
 	};
 }

@@ -2,30 +2,21 @@
 //
 
 #include "Base.h"
+#include "Input.h"
+#include "Camera.h"
 #include "Player.h"
 
 using namespace update;
 
-void Player::_updateLook()
-{
-	using namespace glm;
-
-	vec2  y( sin( radians(  _yLookDegrees ) ), cos( radians(  _yLookDegrees ) ) );
-	vec2 xz( sin( radians( _xzLookDegrees ) ), cos( radians( _xzLookDegrees ) ) );
-	
-	_look = _position + glm::vec3( xz.x * y.y, y.x, xz.y * y.y );
-}
-
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Sets the position and the look direction
+//  Calls parent constructor
 //
 Player::Player( glm::vec3 pos, float yLookDegrees, float xzLookDegrees ) :
-	_position( _position ),
-	_yLookDegrees( yLookDegrees ),
-	_xzLookDegrees( xzLookDegrees )
+	Camera( pos, yLookDegrees, xzLookDegrees ),
+	_velocity()
 {
-	_updateLook();
+
 }
 
 
@@ -34,5 +25,57 @@ Player::Player( glm::vec3 pos, float yLookDegrees, float xzLookDegrees ) :
 //
 void Player::update( double delta, Input* input )
 {
-	std::cout << "Updating player" << std::endl;
+	_velocity /= 2.0f;
+
+	// Update position
+	{
+		using namespace glm;
+
+		if ( keyinput::getKeyDown( 'W' ) )
+		{
+			_velocity += vec3(
+				sin( radians( _xzLookDegrees ) ) * PLR_MOVE_SPEED,
+				0.0f,
+				cos( radians( _xzLookDegrees ) ) * PLR_MOVE_SPEED
+			);
+		}
+
+		if ( keyinput::getKeyDown( 'S' ) )
+		{
+			_velocity += vec3(
+				-sin( radians( _xzLookDegrees ) ) * PLR_MOVE_SPEED,
+				0.0f,
+				-cos( radians( _xzLookDegrees ) ) * PLR_MOVE_SPEED
+			);
+		}
+
+		if ( keyinput::getKeyDown( 'D' ) )
+		{
+			_velocity += vec3(
+				sin( radians( _xzLookDegrees - 90 ) ) * PLR_MOVE_SPEED,
+				0.0f,
+				cos( radians( _xzLookDegrees - 90 ) ) * PLR_MOVE_SPEED
+			);
+		}
+
+		if ( keyinput::getKeyDown( 'A' ) )
+		{
+			_velocity += vec3(
+				sin( radians( _xzLookDegrees + 90 ) ) * PLR_MOVE_SPEED,
+				0.0f,
+				cos( radians( _xzLookDegrees + 90 ) ) * PLR_MOVE_SPEED
+			);
+		}
+
+		clamp( _velocity, -PLR_MOVE_SPEED, PLR_MOVE_SPEED );
+	}
+
+	_move( _velocity * float( delta ) );
+
+	// Update look direction
+	int dx, dy,* dxp = &dx,* dyp = &dy;
+	input->getMouseDelta( dxp, dyp );
+	_xzLookDegrees -= dx * PLR_LOOK_SPEED;
+	 _yLookDegrees -= dy * PLR_LOOK_SPEED;
+	_updateLook();
 }

@@ -5,21 +5,25 @@
 
 
 // ----------------------------------------------------------------------------
+//  PLAYER MACROS
+// ----------------------------------------------------------------------------
+
+// Mouse sensitivity, in degrees per pixel
+#define PLR_LOOK_SPEED 0.15f
+
+// Player x/z move speed, in OGL units per second
+#define PLR_MOVE_SPEED 2.5f
+
+
+// ----------------------------------------------------------------------------
 //  DECLARATIONS
 // ----------------------------------------------------------------------------
 
 namespace update
 {
-	class Player {
+	class Player : public Camera {
 	private:
-		glm::vec3 _position;
-		glm::vec3 _look;
-
 		glm::vec3 _velocity;
-		
-		float _yLookDegrees;
-		float _xzLookDegrees;
-		void  _updateLook();
 	public:
 		Player( glm::vec3 pos, float yLookDegrees, float xzLookDegrees );
 

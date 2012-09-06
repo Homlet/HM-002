@@ -4,6 +4,7 @@
 #include "Base.h"
 #include "Input.h"
 #include "Buffer.h"
+#include "Camera.h"
 #include "Player.h"
 #include "Entity.h"
 #include "State.h"
@@ -14,8 +15,8 @@ using namespace update;
 // --------------------------------------------------------------------------------------------------------------------
 //  Initializes the world and player
 //
-State::State() :
-	_player( glm::vec3( 4.0, 3.0, 4.0 ), 45.0f, 45.0f )
+State::State( void ) :
+_camera( std::shared_ptr<Camera>( new Player( glm::vec3( 5.0f, 0.0f, 0.0f ), 45.0f, 45.0f ) ) )
 {
 
 }
@@ -26,5 +27,15 @@ State::State() :
 //
 void State::update( double delta, Input* input )
 {
-	_player.update( delta, input );
+	_camera->update( delta, input );
+}
+
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Sets the look direction based on _xzLookDegrees and _yLookDegrees
+//
+std::shared_ptr<Camera> State::getCamera( void )
+{
+	return _camera;
 }

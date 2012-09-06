@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <vector>
-
 
 // ----------------------------------------------------------------------------
 //  DECLARATIONS
@@ -13,14 +11,16 @@
 namespace update
 {
 	class State {
-	private:
+	protected:
 		std::vector<render::Buffer> _bufferStack;
 		std::vector<Entity>         _entityStack;
-		Player                      _player;
+		std::shared_ptr<Camera>     _camera;
 	//	World                       _world;
 	public:
-		State();
+		State( void );
 
-		void update( double delta, Input* input );
+		virtual void update( double delta, Input* input );
+
+		std::shared_ptr<Camera> getCamera( void );
 	};
 }

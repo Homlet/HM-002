@@ -15,17 +15,16 @@ using namespace render;
 //  Creates the Shader, VAO and VBO, sets glEnable()s and matrices
 //
 Handler::Handler( void ) :
-	_frame( 0 ),
 	_shader( "shader.vert", "shader.frag" ),
 	_buffer( buffer::Cube() )
 {
 	_matrices.setView(
-		glm::vec3( 2, 2, 0 ),
+		glm::vec3( 1, 1, 1 ),
 		glm::vec3( 0, 0, 0 ),
 		glm::vec3( 0, 1, 0 )
 	);
 	_matrices.setProjection(
-		90.0f,
+		75.0f,
 		static_cast<float> (WIN_W) / WIN_H,
 		0.1f,
 		100.0f
@@ -48,16 +47,19 @@ Handler::Handler( void ) :
 // --------------------------------------------------------------------------------------------------------------------
 //  Handles the entire render process for one frame
 //
-void Handler::render( void )
+void Handler::render( glm::vec3 position, glm::vec3 look )
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-	_frame += 1;
+	_matrices.setView(
+		position,
+		look,
+		glm::vec3( 0, 1, 0 )
+	);
+
 	_shader.bind();
 
 	_matrices.loadIdentity();
-	_matrices.rotate( glm::vec3( 0.0, 1.0, 0.0 ), glm::sin( _frame / 50.0f ) * 90.0f );
-	_matrices.rotate( glm::vec3( 1.0, 0.0, 0.0 ), glm::cos( _frame / 50.0f ) * 90.0f );
 	_matrices.computeModelViewProjection();
 	_shader.setUniforms( _matrices.getModelViewProjection() );
 	_buffer.render( GL_TRIANGLE_STRIP );
