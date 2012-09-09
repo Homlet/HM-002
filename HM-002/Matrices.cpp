@@ -11,10 +11,10 @@ using namespace render;
 //  Loads all matrices to identity
 //
 Matrices::Matrices() :
-	              _model( glm::mat4( 1.0 ) ),
-	               _view( glm::mat4( 1.0 ) ),
-	         _projection( glm::mat4( 1.0 ) ),
-	_modelViewProjection( glm::mat4( 1.0 ) )
+	     _model( glm::mat4( 1.0 ) ),
+	      _view( glm::mat4( 1.0 ) ),
+	_projection( glm::mat4( 1.0 ) ),
+	 _modelView( glm::mat4( 1.0 ) )
 {
 
 }
@@ -84,18 +84,27 @@ void Matrices::setProjection( float fov, float aspectRatio, float nearClip, floa
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Sets _modelViewProjection to the product of all three current matrices
+//  Sets _modelView to the product of all three current matrices
 //
-void Matrices::computeModelViewProjection( void )
+void Matrices::computeModelView( void )
 {
-	_modelViewProjection = _projection * _view * _model;
+	_modelView = _view * _model;
 }
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Returns _modelViewProjection
+//  Returns _modelView
 //
-glm::mat4 Matrices::getModelViewProjection( void ) const
+glm::mat4 Matrices::getModelView( void ) const
 {
-	return _modelViewProjection;
+	return _modelView;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Returns _projection
+//
+glm::mat4 Matrices::getProjection( void ) const
+{
+	return _projection;
 }

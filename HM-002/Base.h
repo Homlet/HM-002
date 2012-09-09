@@ -55,28 +55,32 @@ namespace update
 	class Input;
 	class Entity;
 	class Player;
-/*
-	class World;
 
-	namespace collide
-	{
-		class Sphere;
-		class AABB;
-	}
+//	namespace collide
+//	{
+//		class Sphere;
+//		class AABB;
+//	}
+
+	class World;
 	
 	namespace world
 	{
-		typedef struct {
-			const unsigned char type;
-			const unsigned char light;
-			bool isSolid() {
-				return false;
-			};
-		} block;
+		enum BlockType
+		{
+			BlockType_Air = 0,
 
+			BlockType_Dirt,
+			BlockType_Grass,
+			BlockType_Rock,
+			BlockType_Sand,
+
+			BlockType_Total
+		};
+
+		class Block;
 		class Chunk;
 	}
-*/
 }
 
 

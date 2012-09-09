@@ -12,7 +12,11 @@
 #define PLR_LOOK_SPEED 0.15f
 
 // Player x/z move speed, in OGL units per second
-#define PLR_MOVE_SPEED 2.5f
+#define PLR_WALK_SPEED 2.5f
+
+// Factor to divide _velocity by each update
+// TODO: change to subtraction system
+#define PLR_WALK_FRICTION 1.5f
 
 
 // ----------------------------------------------------------------------------

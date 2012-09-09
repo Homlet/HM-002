@@ -15,8 +15,7 @@ using namespace render;
 //  Creates the Shader, VAO and VBO, sets glEnable()s and matrices
 //
 Handler::Handler( void ) :
-	_shader( "shader.vert", "shader.frag" ),
-	_buffer( buffer::Cube() )
+	_shader( "shader.vert", "shader.frag" )
 {
 	_matrices.setView(
 		glm::vec3( 1, 1, 1 ),
@@ -41,13 +40,20 @@ Handler::Handler( void ) :
 
 	glEnable( GL_CULL_FACE );
 	glCullFace( GL_BACK );
+
+	glClearColor(
+		135 / 255.0f,
+		206 / 255.0f,
+		235 / 255.0f,
+		255 / 255.0f
+	);
 }
 
 
 // --------------------------------------------------------------------------------------------------------------------
 //  Handles the entire render process for one frame
 //
-void Handler::render( glm::vec3 position, glm::vec3 look )
+void Handler::render( glm::vec3 position, glm::vec3 look, std::vector<render::Buffer>* buffers )
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
@@ -59,10 +65,17 @@ void Handler::render( glm::vec3 position, glm::vec3 look )
 
 	_shader.bind();
 
-	_matrices.loadIdentity();
-	_matrices.computeModelViewProjection();
-	_shader.setUniforms( _matrices.getModelViewProjection() );
-	_buffer.render( GL_TRIANGLE_STRIP );
+	for ( int i = 0; i < (int) buffers->size(); i++ )
+	{
+		_matrices.loadIdentity();
+		_matrices.computeModelView();
+		_shader.setUniforms(
+			_matrices.getModelView(),
+			_matrices.getProjection(),
+			glm::vec4( 113, 197, 231, 255 )
+		);
+		buffers->at( i ).render( GL_TRIANGLES );
+	}
 
 	_shader.unbind();
 }

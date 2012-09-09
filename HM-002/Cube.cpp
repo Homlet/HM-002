@@ -36,7 +36,8 @@ const GLushort Cube::_indices[14] = {
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates vertex buffer and fills it with data to draw a 2x2x2 cube (-1.0f to 1.0f on each axis)
 //
-Cube::Cube( void )
+Cube::Cube( void ) :
+	Buffer()
 {
 	Buffer::setData( &_data[0], sizeof ( _data ) / sizeof ( vertex ) );
 	Buffer::setIndices( &_indices[0], sizeof ( _indices ) / sizeof ( GLushort ) );

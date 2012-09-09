@@ -54,6 +54,7 @@ packages/
 
 #ncrunch
 *ncrunch*
+
 *crunch*.local.xml
 
 # visual studio database projects
@@ -61,3 +62,6 @@ packages/
 
 #Test files
 *.testsettings
+
+#stb_image.c
+*stb_image.c

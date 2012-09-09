@@ -11,7 +11,7 @@
 namespace render
 {
 	class Buffer {
-	protected:
+	private:
 		static const int _attribLocationVertex = 0;
 		static const int _attribLocationColor = 1;
 
@@ -20,6 +20,11 @@ namespace render
 		int _count;
 	public:
 		Buffer( void );
+		Buffer( std::vector<render::vertex>* data );
+		Buffer(
+			std::vector<render::vertex>* data,
+			std::vector<GLushort>* indices
+		);
 
 		void setData( const vertex* data, int count ) const;
 		void setIndices( const GLushort* indices, int count );

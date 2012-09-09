@@ -34,6 +34,12 @@
     <Filter Include="Resource Files\shader">
       <UniqueIdentifier>{a898c3e8-b74c-41ba-b0cd-f2ff7b609d15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\update\world">
+      <UniqueIdentifier>{233cf5b2-e9fe-46d8-8008-9b1c5bcce1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\update\world">
+      <UniqueIdentifier>{defdb2d1-2113-46b0-ac5d-2bae534680d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -68,6 +74,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\update</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>Source Files\update\world</Filter>
+    </ClCompile>
+    <ClCompile Include="Chunk.cpp">
+      <Filter>Source Files\update\world</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +117,15 @@
       <Filter>Header Files\update</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>Header Files\update</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>Header Files\update\world</Filter>
+    </ClInclude>
+    <ClInclude Include="Chunk.h">
+      <Filter>Header Files\update\world</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
       <Filter>Header Files\update</Filter>
     </ClInclude>
   </ItemGroup>

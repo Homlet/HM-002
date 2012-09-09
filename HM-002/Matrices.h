@@ -15,7 +15,7 @@ namespace render
 		glm::mat4 _model;
 		glm::mat4 _view;
 		glm::mat4 _projection;
-		glm::mat4 _modelViewProjection;
+		glm::mat4 _modelView;
 	public:
 		Matrices( void );
 
@@ -36,7 +36,8 @@ namespace render
 			float farClip
 		);
 
-		void computeModelViewProjection( void );
-		glm::mat4 getModelViewProjection( void ) const;
+		void computeModelView( void );
+		glm::mat4 getModelView( void ) const;
+		glm::mat4 getProjection( void ) const;
 	};
 }

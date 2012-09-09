@@ -29,7 +29,7 @@ namespace update
 		
 		void getMousePos( int* mx, int* my ) const;
 		void getMouseDelta( int* dx, int* dy ) const;
-		bool getMouseButton( int button, bool wasJustPressed ) const;
+		bool getMouseButton( int button, bool wasJustPressed = false ) const;
 		bool getMouseTrapped( void ) const;
 	};
 

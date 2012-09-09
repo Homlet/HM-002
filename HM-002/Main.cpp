@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Entity.h"
+#include "Chunk.h"
 #include "State.h"
 #include "Shader.h"
 #include "Matrices.h"
@@ -53,15 +54,15 @@ int main(int argc, char* argv[])
 		frame = glfwGetTime();
 		delta = frame - frame_old;
 
-		// Poll mouse changes
+		// Poll mouse and keyboard changes
 		input.poll();
 		update::keyinput::updateOldKeybuffer();
 
 		// Run game logic for current state
 		state.update( delta, &input );
 
-		// Render
-		renderhandler.render( camera->getPosition(), camera->getLook() );
+		// Renders
+		renderhandler.render( camera->getPosition(), camera->getLook(), state.getBuffers() );
 
 		glfwSwapBuffers();
 

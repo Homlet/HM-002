@@ -18,14 +18,44 @@ Buffer::Buffer( void )
 
 
 // --------------------------------------------------------------------------------------------------------------------
+//  Creates vertex buffer with starting data
+//
+Buffer::Buffer( std::vector<render::vertex>* data )
+{
+	glGenBuffers( 1, &_dataID );
+	glGenBuffers( 1, &_indicesID );
+	setData( &(*data)[0], data->size() );
+
+	std::vector<GLushort> indices;
+	GLushort j = 0;
+	for ( unsigned int i = 0u; i < data->size(); i++ )
+		indices.push_back( j++ );
+
+	setIndices( &indices[0], indices.size() );
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Creates vertex buffer with starting data and indices
+//
+Buffer::Buffer( std::vector<render::vertex>* data, std::vector<GLushort>* indices )
+{
+	glGenBuffers( 1, &_dataID );
+	glGenBuffers( 1, &_indicesID );
+	setData( &(*data)[0], data->size() );
+	setIndices( &(*indices)[0], indices->size() );
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
 //  Sets buffer data
 //
-void Buffer::setData( const vertex* data, int _count ) const
+void Buffer::setData( const vertex* data, int count ) const
 {
 	bind();
 	glBufferData(
 		GL_ARRAY_BUFFER,
-		_count * sizeof ( vertex ),
+		count * sizeof ( vertex ),
 		data,
 		GL_STATIC_DRAW
 	);
@@ -36,10 +66,10 @@ void Buffer::setData( const vertex* data, int _count ) const
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets buffer indices
 //
-void Buffer::setIndices( const GLushort* indices, int _count )
+void Buffer::setIndices( const GLushort* indices, int count )
 {
 	bind();
-	this->_count = _count;
+	_count = count;
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,
 		_count * sizeof ( GLushort ),
