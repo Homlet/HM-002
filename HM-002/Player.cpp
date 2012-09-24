@@ -2,8 +2,10 @@
 //
 
 #include "Base.h"
+
 #include "Input.h"
 #include "Camera.h"
+
 #include "Player.h"
 
 using namespace update;
@@ -13,8 +15,7 @@ using namespace update;
 //  Calls parent constructor
 //
 Player::Player( glm::vec3 pos, float yLookDegrees, float xzLookDegrees ) :
-	Camera( pos, yLookDegrees, xzLookDegrees ),
-	_velocity()
+	Camera( pos, yLookDegrees, xzLookDegrees )
 {
 
 }
@@ -25,6 +26,8 @@ Player::Player( glm::vec3 pos, float yLookDegrees, float xzLookDegrees ) :
 //
 void Player::update( double delta, Input* input )
 {
+	Camera::update( delta, input );
+
 	_velocity /= PLR_WALK_FRICTION;
 
 	// Update position

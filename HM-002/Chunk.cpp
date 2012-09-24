@@ -1,11 +1,15 @@
 // "Chunk.cpp"
 //
 
+#include "WorldMacros.h"
+
 #include "Base.h"
+
 #include "Buffer.h"
-#include "World.h"
-#include "Chunk.h"
 #include "Block.h"
+#include "ChunkProvider.h"
+
+#include "Chunk.h"
 
 using namespace update::world;
 
@@ -14,30 +18,30 @@ using namespace update::world;
 //  Returns a vector filled with vertex data for a cube
 //
 void Chunk::_createBlockBuffer(
-		int x,
-		int y,
-		int z,
-		bool front,
-		bool back,
-		bool right,
-		bool left,
-		bool top,
-		bool bottom,
-		BlockType type,
-		std::vector<render::vertex>* data,
-		std::vector<GLushort>* indices
-	)
+	int x,
+	int y,
+	int z,
+	bool front,
+	bool back,
+	bool right,
+	bool left,
+	bool top,
+	bool bottom,
+	BlockType type,
+	std::vector<render::vertex>* data,
+	std::vector<GLushort>* indices
+)
 {
 	GLushort offset = (GLushort) data->size();
 	
-	render::vertex p0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 255,   0, 255, 255};
-	render::vertex p1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 255, 255, 255, 255};
-	render::vertex p2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 255, 255, 255, 255};
-	render::vertex p3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 255, 255,   0, 255};
-	render::vertex p4 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 255,   0,   0, 255};
-	render::vertex p5 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 255, 255, 255, 255};
-	render::vertex p6 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE,   0, 255, 255, 255};
-	render::vertex p7 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 255, 255, 255, 255};
+	render::vertex p0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
+	render::vertex p1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
+	render::vertex p2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
+	render::vertex p3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
+	render::vertex p4 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
+	render::vertex p5 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
+	render::vertex p6 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
+	render::vertex p7 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
 	
 	data->push_back( p0 );
 	data->push_back( p1 );
@@ -138,58 +142,69 @@ void Chunk::_rebuild( void )
 					continue;
 				
 				bool front, back, right, left, top, bottom;
-
-				back   = z == 0                  || !_blocks[x][y][z - 1].getActive();
-				front  = z == WLD_CHUNK_SIZE - 1 || !_blocks[x][y][z + 1].getActive();
-				left   = x == 0                  || !_blocks[x - 1][y][z].getActive();
-				right  = x == WLD_CHUNK_SIZE - 1 || !_blocks[x + 1][y][z].getActive();
-				bottom = y == 0                  || !_blocks[x][y - 1][z].getActive();
-				top    = y == WLD_CHUNK_SIZE - 1 || !_blocks[x][y + 1][z].getActive();
+				
+				back   = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x, y, z - 1 ) )->getActive();
+				front  = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x, y, z + 1 ) )->getActive();
+				right  = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x + 1, y, z ) )->getActive();
+				left   = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x - 1, y, z ) )->getActive();
+				top    = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x, y + 1, z ) )->getActive();
+				bottom = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x, y - 1, z ) )->getActive();
 
 				_createBlockBuffer(
-					x,
-					y,
-					z,
-					front,
-					back,
-					right,
-					left,
-					top,
-					bottom,
+					x, y, z,
+					front, back, right, left, top, bottom,
 					_blocks[x][y][z].getType(),
 					data,
 					indices
 				);
 			}
 	
-	_buffer = new render::Buffer( data, indices );
+	_buffer->setData( &(*data)[0], data->size() );
+	_buffer->setIndices( &(*indices)[0], indices->size() );
 	_hasChanged = false;
 }
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Fills _blocks according to a 3d periodic perlin noise function
+//  Fills _blocks according to a 3d simplex noise function
 //
-Chunk::Chunk( void ) :
-	_hasChanged( true )
+Chunk::Chunk( glm::vec3 pos, ChunkProvider* chunkProvider, bool active ) :
+	_chunkProvider( chunkProvider ),
+	_nullBlock( new Block( BlockType_Air, false ) ),
+	_hasChanged( true ),
+	_buffer( new render::Buffer( pos ) ),
+	_position( pos ),
+	_active( active )
 {
-	_blocks = new Block**[WLD_CHUNK_SIZE];
+	if ( _active )
+	{
+		_blocks = new Block**[WLD_CHUNK_SIZE];
 
-    for ( int x = 0; x < WLD_CHUNK_SIZE; x++ )
-    {
-        _blocks[x] = new Block*[WLD_CHUNK_SIZE];
-
-        for ( int y = 0; y < WLD_CHUNK_SIZE; y++ )
+		for ( int x = 0; x < WLD_CHUNK_SIZE; x++ )
 		{
-            _blocks[x][y] = new Block[WLD_CHUNK_SIZE];
+			_blocks[x] = new Block*[WLD_CHUNK_SIZE];
 
-			for ( int z = 0; z < WLD_CHUNK_SIZE; z++ )
+			for ( int y = 0; y < WLD_CHUNK_SIZE; y++ )
 			{
-				if ( glm::simplex( glm::vec3( x / WLD_FREQ, y / WLD_FREQ, z / WLD_FREQ ) ) > WLD_DENSITY_THRES )
-					_blocks[x][y][z] = *new Block( BlockType_Dirt, true );
+				_blocks[x][y] = new Block[WLD_CHUNK_SIZE];
+
+				for ( int z = 0; z < WLD_CHUNK_SIZE; z++ )
+				{
+					if ( glm::simplex(
+							glm::vec3(
+								(x + pos.x) / WLD_FREQ,
+								(y + pos.y) / WLD_FREQ,
+								(z + pos.z) / WLD_FREQ
+							)
+						) > WLD_DENSITY_THRES * (y / (WLD_CHUNK_SIZE * WLD_HEIGHT))
+						)
+					{
+						_blocks[x][y][z] = *new Block( BlockType_Dirt, true );
+					}
+				}
 			}
 		}
-    }
+	}
 }
 
 
@@ -214,6 +229,8 @@ Chunk::~Chunk( void )
 	delete [] _blocks;
 
 	delete _buffer;
+
+	delete _nullBlock;
 }
 
 
@@ -228,9 +245,70 @@ void Chunk::update( double delta )
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Returns _meshes as a render::Buffer
+//  Returns _buffer
 //
 render::Buffer* Chunk::getBuffer( void ) const
 {
 	return _buffer;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Sets active as specified
+//
+void Chunk::setActive( bool active )
+{
+	_active = active;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Returns if the chunk is active
+//
+bool Chunk::isActive( void ) const
+{
+	return _active;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Returns block pointer at specified position in _blocks array
+//
+Block* Chunk::getBlock( glm::ivec3 pos ) const
+{
+	pos = glm::clamp( pos, 0, WLD_CHUNK_SIZE - 1 );
+	return &_blocks[pos.x][pos.y][pos.z];
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Returns block pointer at specified position in the world
+//
+Block* Chunk::getBlockAbsolute( glm::ivec3 absPos ) const
+{
+	if (
+		_position.x <= absPos.x &&
+		   absPos.x < _position.x + WLD_CHUNK_SIZE &&
+
+		_position.y <= absPos.y &&
+		   absPos.y < _position.y + WLD_CHUNK_SIZE &&
+
+		_position.z <= absPos.z &&
+		   absPos.z < _position.z + WLD_CHUNK_SIZE
+	)
+	{
+		absPos = absPos % WLD_CHUNK_SIZE;
+		return &_blocks[absPos.x][absPos.y][absPos.z];
+	}
+	
+	Chunk* chunk = _chunkProvider->getChunk( absPos / WLD_CHUNK_SIZE );
+
+	if ( chunk->isActive() )
+	{
+		absPos = absPos % WLD_CHUNK_SIZE;
+
+		return chunk->getBlock( absPos );
+	}
+
+	return _nullBlock;
 }

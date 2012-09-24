@@ -14,6 +14,9 @@ namespace update
 	private:
 		glm::vec3 _position;
 		glm::vec3 _look;
+
+		GLint    _lastPolygonMode;
+		GLint _currentPolygonMode;
 	protected:
 		void _move( glm::vec3 offset );
 
@@ -23,9 +26,13 @@ namespace update
 	public:
 		Camera( glm::vec3 pos, float yLookDegrees, float xzLookDegrees );
 
-		virtual void update( double delta, Input* input ) = 0;
+		virtual void update( double delta, Input* input );
 		
 		glm::vec3 getPosition( void ) const;
 		glm::vec3 getLook( void ) const;
+		
+		void switchPolygonMode( void );
+		bool    getPolygonModeSwitch( void ) const;
+		GLint   getPolygonMode( void ) const;
 	};
 }

@@ -1,11 +1,15 @@
 // "Handler.cpp"
 //
 
+#include "WindowMacros.h"
+
 #include "Base.h"
+
 #include "Buffer.h"
-#include "Cube.h"
+#include "Camera.h"
 #include "Shader.h"
 #include "Matrices.h"
+
 #include "Handler.h"
 
 using namespace render;
@@ -41,6 +45,10 @@ Handler::Handler( void ) :
 	glEnable( GL_CULL_FACE );
 	glCullFace( GL_BACK );
 
+	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+
+	glEnable( GL_VERTEX_PROGRAM_POINT_SIZE );
+
 	glClearColor(
 		135 / 255.0f,
 		206 / 255.0f,
@@ -53,13 +61,23 @@ Handler::Handler( void ) :
 // --------------------------------------------------------------------------------------------------------------------
 //  Handles the entire render process for one frame
 //
-void Handler::render( glm::vec3 position, glm::vec3 look, std::vector<render::Buffer>* buffers )
+void Handler::render( std::shared_ptr<update::Camera> camera, std::vector<render::Buffer>* buffers )
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
+	if ( camera->getPolygonModeSwitch() )
+	{
+		glPolygonMode( GL_FRONT_AND_BACK, camera->getPolygonMode() );
+
+		if ( camera->getPolygonMode() == GL_FILL )
+			glEnable( GL_CULL_FACE );
+		else
+			glDisable( GL_CULL_FACE );
+	}
+
 	_matrices.setView(
-		position,
-		look,
+		camera->getPosition(),
+		camera->getLook(),
 		glm::vec3( 0, 1, 0 )
 	);
 
@@ -67,14 +85,16 @@ void Handler::render( glm::vec3 position, glm::vec3 look, std::vector<render::Bu
 
 	for ( int i = 0; i < (int) buffers->size(); i++ )
 	{
+		Buffer* b = &buffers->at( i );
 		_matrices.loadIdentity();
+		_matrices.translate( b->getPosition() );
 		_matrices.computeModelView();
 		_shader.setUniforms(
 			_matrices.getModelView(),
 			_matrices.getProjection(),
 			glm::vec4( 113, 197, 231, 255 )
 		);
-		buffers->at( i ).render( GL_TRIANGLES );
+		b->render( GL_TRIANGLES );
 	}
 
 	_shader.unbind();

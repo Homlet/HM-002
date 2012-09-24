@@ -2,6 +2,7 @@
 //
 
 #include "Base.h"
+
 #include "Shader.h"
 
 using namespace render;
@@ -111,7 +112,7 @@ void Shader::bind( void ) const
 void Shader::setUniforms( glm::mat4 MV, glm::mat4 P, glm::vec4 Fog_Color ) const
 {
 	glUniformMatrix4fv( _uniformLocationMat4MV, 1, GL_FALSE, &MV[0][0] );
-	glUniformMatrix4fv( _uniformLocationMat4P,  1, GL_FALSE, &P[0][0] );
+	glUniformMatrix4fv( _uniformLocationMat4P,  1, GL_FALSE,  &P[0][0] );
 	glUniform4fv( _uniformLocationVec4Fog_Color, 1, &Fog_Color[0] );
 }
 

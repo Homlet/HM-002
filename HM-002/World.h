@@ -5,17 +5,21 @@
 
 
 // ----------------------------------------------------------------------------
-//  WORLD MACROS
+//  DECLARATIONS
 // ----------------------------------------------------------------------------
 
-// Chunk xyz size, in blocks
-#define WLD_CHUNK_SIZE 16
+namespace update
+{
+	class World {
+	private:
+		world::ChunkProvider* _chunkProvider;
 
-// Terrain frequency divisor
-#define WLD_FREQ 8.0f
+		std::vector<render::Buffer>* _bufferStack;
+	public:
+		World( void );
+		~World( void );
 
-// Minimum terrain density threshold
-#define WLD_DENSITY_THRES 1.2f / (y / WLD_CHUNK_SIZE + 1.0f) - 1.0f
-
-// Block size, in OGL units / 2
-#define WLD_BLOCK_SIZE 0.5f
+		void update( double delta ) const;
+		std::vector<render::Buffer>* getBuffers( void ) const;
+	};
+}

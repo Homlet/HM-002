@@ -1,7 +1,10 @@
 // "Input.cpp"
 //
 
+#include "WindowMacros.h"
+
 #include "Base.h"
+
 #include "Input.h"
 
 using namespace update;

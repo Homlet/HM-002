@@ -2,12 +2,16 @@
 //
 
 #include "Base.h"
+
 #include "Input.h"
 #include "Buffer.h"
-#include "Chunk.h"
 #include "Camera.h"
 #include "Player.h"
+#include "Chunk.h"
+#include "ChunkProvider.h"
+#include "World.h"
 #include "Entity.h"
+
 #include "State.h"
 
 using namespace update;
@@ -29,7 +33,7 @@ State::State( void ) :
 //
 void State::update( double delta, Input* input )
 {
-	_chunk.update( delta );
+	_world.update( delta );
 	_camera->update( delta, input );
 }
 
@@ -40,7 +44,9 @@ void State::update( double delta, Input* input )
 std::vector<render::Buffer>* State::getBuffers( void ) const
 {
 	_bufferStack->clear();
-	_bufferStack->push_back( *_chunk.getBuffer() );
+
+	std::vector<render::Buffer>* tempStack = _world.getBuffers();
+	_bufferStack->insert( _bufferStack->end(), tempStack->begin(), tempStack->end() );
 	
 	return _bufferStack;
 }

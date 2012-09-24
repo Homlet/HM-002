@@ -15,8 +15,7 @@ namespace update
 		std::vector<render::Buffer>* _bufferStack;
 		std::vector<Entity>          _entityStack;
 		std::shared_ptr<Camera>      _camera;
-		world::Chunk                 _chunk;
-	//	World                        _world;
+		World                        _world;
 	public:
 		State( void );
 

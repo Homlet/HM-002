@@ -1,17 +1,23 @@
 // "Main.cpp"
 //
 
+#include "WindowMacros.h"
+
 #include "Base.h"
+
 #include "Input.h"
 #include "Buffer.h"
 #include "Camera.h"
 #include "Player.h"
 #include "Entity.h"
+#include "ChunkProvider.h"
 #include "Chunk.h"
+#include "World.h"
 #include "State.h"
 #include "Shader.h"
 #include "Matrices.h"
 #include "Handler.h"
+
 #include "Main.h"
 
 
@@ -54,15 +60,15 @@ int main(int argc, char* argv[])
 		frame = glfwGetTime();
 		delta = frame - frame_old;
 
-		// Poll mouse and keyboard changes
-		input.poll();
-		update::keyinput::updateOldKeybuffer();
-
 		// Run game logic for current state
 		state.update( delta, &input );
 
 		// Renders
-		renderhandler.render( camera->getPosition(), camera->getLook(), state.getBuffers() );
+		renderhandler.render( camera, state.getBuffers() );
+
+		// Poll mouse and keyboard changes
+		input.poll();
+		update::keyinput::updateOldKeybuffer();
 
 		glfwSwapBuffers();
 
@@ -71,7 +77,7 @@ int main(int argc, char* argv[])
 		{
 			input.trapMouse();
 		}
-
+		
 		if ( update::keyinput::getKeyDown( GLFW_KEY_ESC, true ) &&
 			 input.getMouseTrapped() )
 		{

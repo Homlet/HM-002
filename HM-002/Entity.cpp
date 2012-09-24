@@ -2,7 +2,9 @@
 //
 
 #include "Base.h"
+
 #include "Buffer.h"
+
 #include "Entity.h"
 
 using namespace update;

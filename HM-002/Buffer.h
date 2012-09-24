@@ -18,12 +18,15 @@ namespace render
 		GLuint _dataID;
 		GLuint _indicesID;
 		int _count;
+
+		glm::vec3 _position;
 	public:
-		Buffer( void );
-		Buffer( std::vector<render::vertex>* data );
+		Buffer( glm::vec3 pos );
+		Buffer( std::vector<render::vertex>* data, glm::vec3 pos );
 		Buffer(
 			std::vector<render::vertex>* data,
-			std::vector<GLushort>* indices
+			std::vector<GLushort>* indices,
+			glm::vec3 pos
 		);
 
 		void setData( const vertex* data, int count ) const;
@@ -31,6 +34,9 @@ namespace render
 
 		       void   bind( void ) const;
 		static void unbind( void );
+		
+		     void setPosition( glm::vec3 pos );
+		glm::vec3 getPosition( void ) const;
 
 		void render( const GLint type ) const;
 	};

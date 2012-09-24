@@ -2,6 +2,7 @@
 //
 
 #include "Base.h"
+
 #include "Buffer.h"
 
 using namespace render;
@@ -10,7 +11,8 @@ using namespace render;
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates empty vertex buffer
 //
-Buffer::Buffer( void )
+Buffer::Buffer( glm::vec3 pos ) :
+	_position( pos )
 {
 	glGenBuffers( 1, &_dataID );
 	glGenBuffers( 1, &_indicesID );
@@ -20,7 +22,8 @@ Buffer::Buffer( void )
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates vertex buffer with starting data
 //
-Buffer::Buffer( std::vector<render::vertex>* data )
+Buffer::Buffer( std::vector<render::vertex>* data, glm::vec3 pos ) :
+	_position( pos )
 {
 	glGenBuffers( 1, &_dataID );
 	glGenBuffers( 1, &_indicesID );
@@ -38,7 +41,8 @@ Buffer::Buffer( std::vector<render::vertex>* data )
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates vertex buffer with starting data and indices
 //
-Buffer::Buffer( std::vector<render::vertex>* data, std::vector<GLushort>* indices )
+Buffer::Buffer( std::vector<render::vertex>* data, std::vector<GLushort>* indices, glm::vec3 pos ) :
+	_position( pos )
 {
 	glGenBuffers( 1, &_dataID );
 	glGenBuffers( 1, &_indicesID );
@@ -97,6 +101,24 @@ void Buffer::unbind( void )
 {
 	glBindBuffer( GL_ARRAY_BUFFER, 0 );
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Sets position
+//
+void Buffer::setPosition( glm::vec3 pos )
+{
+	_position = pos;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Returns position
+//
+glm::vec3 Buffer::getPosition( void ) const
+{
+	return _position;
 }
 
 

@@ -20,32 +20,6 @@
 
 
 // ----------------------------------------------------------------------------
-//  WINDOW MACROS
-// ----------------------------------------------------------------------------
-
-// Window width and height
-#define WIN_W 1600
-#define WIN_H 900
-
-// Bits per pixel attribute
-#define WIN_RED_BITS   8
-#define WIN_BLUE_BITS  8
-#define WIN_GREEN_BITS 8
-#define WIN_ALPHA_BITS 8
-
-#define WIN_DEPTH_BITS 24
-
-// FSAA samples
-#define WIN_FSAA 4
-
-// Window title
-#define WIN_TITLE "HM-002"
-
-// Fullscreen or windowed
-#define WIN_TYPE GLFW_WINDOW
-
-
-// ----------------------------------------------------------------------------
 //  FORWARD DECLARATIONS
 // ----------------------------------------------------------------------------
 
@@ -66,6 +40,31 @@ namespace update
 	
 	namespace world
 	{
+		const struct HashConfig {
+			enum
+			{
+				bucket_size = 4,
+				min_bucket = 8
+			};
+
+			size_t operator() ( const glm::ivec3& vec ) const
+			{
+				return ( vec.x * 73856093 ^
+				         vec.y * 19349663 ^
+				         vec.z * 83492791 ) % ( 256 * 256 * 256 );
+			}
+
+			bool operator()(
+				const glm::ivec3& left,
+				const glm::ivec3& right
+			) const
+			{
+				return left.x < right.x ||
+				       left.y < right.y ||
+				       left.z < right.z;
+			}
+		};
+
 		enum BlockType
 		{
 			BlockType_Air = 0,
@@ -80,6 +79,7 @@ namespace update
 
 		class Block;
 		class Chunk;
+		class ChunkProvider;
 	}
 }
 

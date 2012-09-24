@@ -20,8 +20,7 @@ namespace render
 		Handler( void );
 
 		void render(
-			glm::vec3 position,
-			glm::vec3 look,
+			std::shared_ptr<update::Camera> camera,
 			std::vector<render::Buffer>* buffers
 		);
 	};

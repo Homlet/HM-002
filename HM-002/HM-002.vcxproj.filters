@@ -40,6 +40,9 @@
     <Filter Include="Source Files\update\world">
       <UniqueIdentifier>{defdb2d1-2113-46b0-ac5d-2bae534680d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\macros">
+      <UniqueIdentifier>{556d893d-d844-4116-88b7-4823f91fceb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -79,6 +82,12 @@
       <Filter>Source Files\update\world</Filter>
     </ClCompile>
     <ClCompile Include="Chunk.cpp">
+      <Filter>Source Files\update\world</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files\update</Filter>
+    </ClCompile>
+    <ClCompile Include="ChunkProvider.cpp">
       <Filter>Source Files\update\world</Filter>
     </ClCompile>
   </ItemGroup>
@@ -127,6 +136,15 @@
     </ClInclude>
     <ClInclude Include="World.h">
       <Filter>Header Files\update</Filter>
+    </ClInclude>
+    <ClInclude Include="ChunkProvider.h">
+      <Filter>Header Files\update\world</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowMacros.h">
+      <Filter>Header Files\macros</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMacros.h">
+      <Filter>Header Files\macros</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
