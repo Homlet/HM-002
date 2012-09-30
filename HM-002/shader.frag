@@ -1,13 +1,18 @@
-#version 330 core
+#version 400 core
 
-in vec3 frag_color;
+in float fog_amount;
 in vec2 tex_coord;
 
 layout(location = 0) out vec4 color;
 
+uniform vec3 Fog_Color;
 uniform sampler2D Texture_Sampler;
 
 void main()
 {
-	color = vec4(texture( Texture_Sampler, tex_coord ).rgb * frag_color, 1.0);
+	color = mix(
+		vec4(Fog_Color, 1.0f),
+		texture(Texture_Sampler, tex_coord),
+		fog_amount
+	);
 }

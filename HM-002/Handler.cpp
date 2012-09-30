@@ -33,7 +33,7 @@ Handler::Handler( void ) :
 		75.0f,
 		static_cast<float> (WIN_W) / WIN_H,
 		0.1f,
-		50.0f
+		100.0f
 	);
 
 	glGenVertexArrays( 1, &_vertexArrayID );

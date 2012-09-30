@@ -14,7 +14,7 @@
 // ----------------------------------------------------------------------------
 
 // OGL clear color (range 0.0f - 1.0f)
-#define COL_CSV_CLEAR 0.02f, 0.03f, 0.08f, 1.0f
+#define COL_CSV_CLEAR 0.443f, 0.773f, 0.906f, 0.7f
 
 // Fog color
-#define COL_VEC3_FOG glm::vec3( 0.01, 0.01, 0.0175 )
+#define COL_VEC3_FOG glm::vec3( 0.43, 0.76, 0.89 )
