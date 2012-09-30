@@ -19,7 +19,7 @@
 #define WIN_DEPTH_BITS 24
 
 // FSAA samples
-#define WIN_FSAA 4
+#define WIN_FSAA 2
 
 // Window title
 #define WIN_TITLE "HM-002"

@@ -43,6 +43,21 @@
     <Filter Include="Header Files\macros">
       <UniqueIdentifier>{556d893d-d844-4116-88b7-4823f91fceb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render\texture">
+      <UniqueIdentifier>{e8a2d7bd-9ad0-4209-adb1-cde8d613e532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\render\texture">
+      <UniqueIdentifier>{3ad8da0d-20f1-4f94-916b-cee529985755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\xml">
+      <UniqueIdentifier>{3311427d-d071-47ad-bfb7-f50270cc8507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\textures">
+      <UniqueIdentifier>{f5a62d06-10dd-4ab4-9923-78e44cd93dc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\textures\sheets">
+      <UniqueIdentifier>{4f692d93-bed0-4320-b895-7a3a29636dd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -90,6 +105,9 @@
     <ClCompile Include="ChunkProvider.cpp">
       <Filter>Source Files\update\world</Filter>
     </ClCompile>
+    <ClCompile Include="Loader.cpp">
+      <Filter>Source Files\render\texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h">
@@ -105,9 +123,6 @@
       <Filter>Header Files\update</Filter>
     </ClInclude>
     <ClInclude Include="Handler.h">
-      <Filter>Header Files\render</Filter>
-    </ClInclude>
-    <ClInclude Include="Buffer.h">
       <Filter>Header Files\render</Filter>
     </ClInclude>
     <ClInclude Include="Matrices.h">
@@ -146,6 +161,15 @@
     <ClInclude Include="WorldMacros.h">
       <Filter>Header Files\macros</Filter>
     </ClInclude>
+    <ClInclude Include="ColorMacros.h">
+      <Filter>Header Files\macros</Filter>
+    </ClInclude>
+    <ClInclude Include="Loader.h">
+      <Filter>Header Files\render\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Header Files\render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.vert">
@@ -153,6 +177,12 @@
     </None>
     <None Include="shader.frag">
       <Filter>Resource Files\shader</Filter>
+    </None>
+    <None Include="texture_def.xml">
+      <Filter>Resource Files\xml</Filter>
+    </None>
+    <None Include="textures\sheets\blocks.tga">
+      <Filter>Resource Files\textures\sheets</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -19,7 +19,7 @@ namespace update
 	public:
 		State( void );
 
-		virtual void update( double delta, Input* input );
+		virtual void update( double delta );
 		std::vector<render::Buffer>* getBuffers( void ) const;
 
 		std::shared_ptr<Camera> getCamera( void );

@@ -91,9 +91,20 @@ Shader::Shader( const char* vertFilePath, const char* fragFilePath ) :
 	glDeleteShader( fragID );
 
 	// Setup uniforms
-	_uniformLocationMat4MV        = glGetUniformLocation( _programID, "MV" );
-	_uniformLocationMat4P         = glGetUniformLocation( _programID, "P" );
-	_uniformLocationVec4Fog_Color = glGetUniformLocation( _programID, "Fog_Color" );
+	_uniformLocationMat4MV            = glGetUniformLocation( _programID, "MV" );
+	_uniformLocationMat4P             = glGetUniformLocation( _programID, "P" );
+	_uniformLocationVec4Fog_Color     = glGetUniformLocation( _programID, "Fog_Color" );
+
+	_uniformLocation1iTexture_Sampler = glGetUniformLocation( _programID, "Texture_Sampler" );
+
+	// Setup texture sampler
+	bind();
+
+	glUniform1i( _uniformLocation1iTexture_Sampler, 2 );
+	glGenSamplers( 1, &_samplerLocationTexture_Sampler );
+	glBindSampler( 2, _samplerLocationTexture_Sampler );
+
+	unbind();
 }
 
 
@@ -109,11 +120,11 @@ void Shader::bind( void ) const
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets GLSL uniforms: mat4 MVP
 //
-void Shader::setUniforms( glm::mat4 MV, glm::mat4 P, glm::vec4 Fog_Color ) const
+void Shader::setUniforms( glm::mat4 MV, glm::mat4 P, glm::vec3 Fog_Color) const
 {
 	glUniformMatrix4fv( _uniformLocationMat4MV, 1, GL_FALSE, &MV[0][0] );
 	glUniformMatrix4fv( _uniformLocationMat4P,  1, GL_FALSE,  &P[0][0] );
-	glUniform4fv( _uniformLocationVec4Fog_Color, 1, &Fog_Color[0] );
+	glUniform3fv( _uniformLocationVec4Fog_Color, 1, &Fog_Color[0] );
 }
 
 

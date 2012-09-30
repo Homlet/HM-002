@@ -5,6 +5,8 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
+#define DEBUG_MODE
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -25,8 +27,10 @@
 
 namespace update
 {
-	class State;
+	// Singleton
 	class Input;
+
+	class State;
 	class Entity;
 	class Player;
 
@@ -87,9 +91,30 @@ namespace update
 namespace render
 {
 	typedef struct {
-		GLfloat x, y, z;
-		GLubyte r, g, b, a;
+		GLfloat x, y, z, s, t;
 	} vertex;
+
+	typedef struct {
+		std::string name;
+		GLuint id;
+		unsigned int w, h;
+
+		void bind( void )
+		{
+			glBindTexture( GL_TEXTURE_2D, id );
+		};
+
+		static void unbind( void )
+		{
+			glBindTexture( GL_TEXTURE_2D, 0 );
+		};
+	} texture_object;
+
+	namespace texture
+	{
+		// Singleton
+		class Loader;
+	}
 	
 	class Handler;
 	class Shader;

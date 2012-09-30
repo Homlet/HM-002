@@ -10,6 +10,9 @@
 using namespace update;
 
 
+Input* Input::_instance;
+
+
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets all members to zero, hides the mouse cursor. Clears the _keys and _keys_old maps
 //
@@ -22,6 +25,18 @@ Input::Input( void ) :
 	_isMouseTrapped( false )
 {
 	trapMouse();
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Returns a pointer to the singleton object
+//
+Input* Input::getInstance( void )
+{
+	if ( !_instance )
+		_instance = new Input();
+
+	return _instance;
 }
 
 

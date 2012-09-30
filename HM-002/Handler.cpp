@@ -2,6 +2,7 @@
 //
 
 #include "WindowMacros.h"
+#include "ColorMacros.h"
 
 #include "Base.h"
 
@@ -9,6 +10,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "Matrices.h"
+#include "Loader.h"
 
 #include "Handler.h"
 
@@ -19,7 +21,8 @@ using namespace render;
 //  Creates the Shader, VAO and VBO, sets glEnable()s and matrices
 //
 Handler::Handler( void ) :
-	_shader( "shader.vert", "shader.frag" )
+	_shader( "shader.vert", "shader.frag" ),
+	_textures( *( texture::Loader::getInstance()->loadFromXML( "texture_def.xml" ) ) )
 {
 	_matrices.setView(
 		glm::vec3( 1, 1, 1 ),
@@ -30,7 +33,7 @@ Handler::Handler( void ) :
 		75.0f,
 		static_cast<float> (WIN_W) / WIN_H,
 		0.1f,
-		100.0f
+		50.0f
 	);
 
 	glGenVertexArrays( 1, &_vertexArrayID );
@@ -42,6 +45,9 @@ Handler::Handler( void ) :
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
+	glEnable( GL_TEXTURE_2D );
+	_textures[0].bind();
+
 	glEnable( GL_CULL_FACE );
 	glCullFace( GL_BACK );
 
@@ -49,12 +55,7 @@ Handler::Handler( void ) :
 
 	glEnable( GL_VERTEX_PROGRAM_POINT_SIZE );
 
-	glClearColor(
-		135 / 255.0f,
-		206 / 255.0f,
-		235 / 255.0f,
-		255 / 255.0f
-	);
+	glClearColor( COL_CSV_CLEAR );
 }
 
 
@@ -92,7 +93,7 @@ void Handler::render( std::shared_ptr<update::Camera> camera, std::vector<render
 		_shader.setUniforms(
 			_matrices.getModelView(),
 			_matrices.getProjection(),
-			glm::vec4( 113, 197, 231, 255 )
+			COL_VEC3_FOG
 		);
 		b->render( GL_TRIANGLES );
 	}

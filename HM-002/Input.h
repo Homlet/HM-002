@@ -5,6 +5,7 @@
 
 #include <map>
 
+
 // ----------------------------------------------------------------------------
 //  DECLARATIONS
 // ----------------------------------------------------------------------------
@@ -13,6 +14,10 @@ namespace update
 {
 	class Input {
 	private:
+		static Input* _instance;
+
+		Input( void );
+
 		int _mx, _my;
 		int _mx_old, _my_old;
 		int _dx, _dy;
@@ -20,7 +25,7 @@ namespace update
 		int _left_old, _middle_old, _right_old;
 		bool _isMouseTrapped;
 	public:
-		Input( void );
+		static Input* getInstance( void );
 
 		void poll( void );
 

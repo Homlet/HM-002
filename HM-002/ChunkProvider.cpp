@@ -26,8 +26,6 @@ ChunkProvider::ChunkProvider( Chunk* nullChunk ) :
 ChunkProvider::~ChunkProvider( void )
 {
 	_chunkMap.clear();
-
-	delete _nullChunk;
 }
 
 

@@ -17,6 +17,9 @@ namespace render
 		GLuint _uniformLocationMat4MV;
 		GLuint _uniformLocationMat4P;
 		GLuint _uniformLocationVec4Fog_Color;
+		
+		GLuint _uniformLocation1iTexture_Sampler;
+		GLuint _samplerLocationTexture_Sampler;
 	public:
 		Shader( const char* vertFilePath, const char* fragFilePath );
 
@@ -24,7 +27,7 @@ namespace render
 		void setUniforms(
 			glm::mat4 MV,
 			glm::mat4 P,
-			glm::vec4 Fog_Color
+			glm::vec3 Fog_Color
 		) const;
 		void      unbind( void ) const;
 	};

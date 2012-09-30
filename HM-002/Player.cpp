@@ -24,9 +24,9 @@ Player::Player( glm::vec3 pos, float yLookDegrees, float xzLookDegrees ) :
 // --------------------------------------------------------------------------------------------------------------------
 //  Runs player logic (eg. moves player, resets look direction, collides)
 //
-void Player::update( double delta, Input* input )
+void Player::update( double delta )
 {
-	Camera::update( delta, input );
+	Camera::update( delta );
 
 	_velocity /= PLR_WALK_FRICTION;
 
@@ -95,7 +95,7 @@ void Player::update( double delta, Input* input )
 
 	// Update look direction
 	int dx, dy,* dxp = &dx,* dyp = &dy;
-	input->getMouseDelta( dxp, dyp );
+	Input::getInstance()->getMouseDelta( dxp, dyp );
 	_xzLookDegrees -= dx * PLR_LOOK_SPEED;
 	 _yLookDegrees -= dy * PLR_LOOK_SPEED;
 	_updateLook();

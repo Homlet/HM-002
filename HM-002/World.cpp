@@ -29,9 +29,9 @@ World::World( void ) :
 	),
 	_bufferStack( new std::vector<render::Buffer>() )
 {
-	for ( int x = 0; x < 3; x++ )
-		for ( int y = 0; y < 3; y++ )
-			for ( int z = 0; z < 3; z++ )
+	for ( int x = 0; x < WLD_START_SIZE; x++ )
+		for ( int y = 0; y < WLD_START_SIZE; y++ )
+			for ( int z = 0; z < WLD_START_SIZE; z++ )
 			{
 				_chunkProvider->insertChunk(
 					glm::ivec3( x, y, z ),
@@ -64,9 +64,9 @@ World::~World( void )
 //
 void World::update( double delta ) const
 {
-	for ( int x = 0; x < 3; x++ )
-		for ( int y = 0; y < 3; y++ )
-			for ( int z = 0; z < 3; z++ )
+	for ( int x = 0; x < WLD_START_SIZE; x++ )
+		for ( int y = 0; y < WLD_START_SIZE; y++ )
+			for ( int z = 0; z < WLD_START_SIZE; z++ )
 			{
 				_chunkProvider->getChunk( glm::ivec3( x, y, z ) )->update( delta );
 			}
@@ -80,9 +80,9 @@ std::vector<render::Buffer>* World::getBuffers( void ) const
 {
 	_bufferStack->clear();
 
-	for ( int x = 0; x < 3; x++ )
-		for ( int y = 0; y < 3; y++ )
-			for ( int z = 0; z < 3; z++ )
+	for ( int x = 0; x < WLD_START_SIZE; x++ )
+		for ( int y = 0; y < WLD_START_SIZE; y++ )
+			for ( int z = 0; z < WLD_START_SIZE; z++ )
 			{
 				_bufferStack->push_back( *_chunkProvider->getChunk( glm::ivec3( x, y, z ) )->getBuffer() );
 			}

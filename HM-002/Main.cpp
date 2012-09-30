@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 		glfwTerminate();
 		exit( EXIT_FAILURE );
 	}
-	
+
 	if ( glewInit() != GLEW_OK )
 	{
 		glfwTerminate();
@@ -46,7 +46,6 @@ int main(int argc, char* argv[])
 
 	double delta = 0.0, frame = 0.0, frame_old = 0.0;
 	update::State state;
-	update::Input input;
 	update::keyinput::initializeKeyInput();
 	std::shared_ptr<update::Camera> camera = state.getCamera();
 	render::Handler renderhandler;
@@ -61,27 +60,27 @@ int main(int argc, char* argv[])
 		delta = frame - frame_old;
 
 		// Run game logic for current state
-		state.update( delta, &input );
+		state.update( delta );
 
 		// Renders
 		renderhandler.render( camera, state.getBuffers() );
 
 		// Poll mouse and keyboard changes
-		input.poll();
+		update::Input::getInstance()->poll();
 		update::keyinput::updateOldKeybuffer();
 
 		glfwSwapBuffers();
 
-		if ( input.getMouseButton( GLFW_MOUSE_BUTTON_LEFT, true ) &&
-			!input.getMouseTrapped() )
+		if ( update::Input::getInstance()->getMouseButton( GLFW_MOUSE_BUTTON_LEFT, true ) &&
+			!update::Input::getInstance()->getMouseTrapped() )
 		{
-			input.trapMouse();
+			update::Input::getInstance()->trapMouse();
 		}
 		
 		if ( update::keyinput::getKeyDown( GLFW_KEY_ESC, true ) &&
-			 input.getMouseTrapped() )
+			 update::Input::getInstance()->getMouseTrapped() )
 		{
-			input.untrapMouse();
+			update::Input::getInstance()->untrapMouse();
 		}
 
 		// Check for window close signal: "Esc + `" or "Esc + ~" (for American keyboards)

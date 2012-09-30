@@ -26,7 +26,7 @@ namespace update
 	public:
 		Camera( glm::vec3 pos, float yLookDegrees, float xzLookDegrees );
 
-		virtual void update( double delta, Input* input );
+		virtual void update( double delta );
 		
 		glm::vec3 getPosition( void ) const;
 		glm::vec3 getLook( void ) const;

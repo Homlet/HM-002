@@ -16,6 +16,8 @@ namespace render
 
 		Shader   _shader;
 		Matrices _matrices;
+
+		std::vector<texture_object> _textures;
 	public:
 		Handler( void );
 

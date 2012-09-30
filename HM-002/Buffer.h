@@ -13,7 +13,7 @@ namespace render
 	class Buffer {
 	private:
 		static const int _attribLocationVertex = 0;
-		static const int _attribLocationColor = 1;
+		static const int _attribLocationUV = 1;
 
 		GLuint _dataID;
 		GLuint _indicesID;

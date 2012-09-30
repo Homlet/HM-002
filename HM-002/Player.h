@@ -31,6 +31,6 @@ namespace update
 	public:
 		Player( glm::vec3 pos, float yLookDegrees, float xzLookDegrees );
 
-		void update( double delta, Input* input );
+		void update( double delta );
 	};
 }

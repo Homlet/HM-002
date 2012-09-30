@@ -32,29 +32,33 @@ void Chunk::_createBlockBuffer(
 	std::vector<GLushort>* indices
 )
 {
-	GLushort offset = (GLushort) data->size();
-	
-	render::vertex p0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	render::vertex p1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	render::vertex p2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	render::vertex p3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	render::vertex p4 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	render::vertex p5 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	render::vertex p6 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	render::vertex p7 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0, 0, 0, 255};
-	
-	data->push_back( p0 );
-	data->push_back( p1 );
-	data->push_back( p2 );
-	data->push_back( p3 );
-	data->push_back( p4 );
-	data->push_back( p5 );
-	data->push_back( p6 );
-	data->push_back( p7 );
+	//render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
+	//render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
+	//render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
+	//render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
+
+	//render::vertex  v4 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
+	//render::vertex  v5 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
+	//render::vertex  v6 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
+	//render::vertex  v7 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
+
 	
 	// Front
 	if ( front )
 	{
+		GLushort offset = (GLushort) data->size();
+
+		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f };
+		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f };
+
+		data->push_back( v0 );
+		data->push_back( v1 );
+		data->push_back( v2 );
+		data->push_back( v3 );
+
+
 		indices->push_back( 0 + offset );
 		indices->push_back( 1 + offset );
 		indices->push_back( 2 + offset );
@@ -67,61 +71,126 @@ void Chunk::_createBlockBuffer(
 	// Back
 	if ( back )
 	{
-		indices->push_back( 4 + offset );
-		indices->push_back( 5 + offset );
-		indices->push_back( 6 + offset );
+		GLushort offset = (GLushort) data->size();
+
+		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
+		render::vertex  v1 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 0.0f };
+		render::vertex  v2 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 1.0f };
+		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 1.0f };
+
+		data->push_back( v0 );
+		data->push_back( v1 );
+		data->push_back( v2 );
+		data->push_back( v3 );
+
+
+		indices->push_back( 0 + offset );
+		indices->push_back( 1 + offset );
+		indices->push_back( 2 + offset );
 	
-		indices->push_back( 4 + offset );
-		indices->push_back( 6 + offset );
-		indices->push_back( 7 + offset );
+		indices->push_back( 0 + offset );
+		indices->push_back( 2 + offset );
+		indices->push_back( 3 + offset );
 	}
 	
 	// Right
 	if ( right )
 	{
+		GLushort offset = (GLushort) data->size();
+		
+		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 0.0f };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 1.0f };
+		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f };
+
+		data->push_back( v0 );
+		data->push_back( v1 );
+		data->push_back( v2 );
+		data->push_back( v3 );
+
+
+		indices->push_back( 0 + offset );
 		indices->push_back( 1 + offset );
-		indices->push_back( 4 + offset );
-		indices->push_back( 7 + offset );
-	
-		indices->push_back( 1 + offset );
-		indices->push_back( 7 + offset );
 		indices->push_back( 2 + offset );
+	
+		indices->push_back( 0 + offset );
+		indices->push_back( 2 + offset );
+		indices->push_back( 3 + offset );
 	}
 
 	// Left
 	if ( left )
 	{
-		indices->push_back( 5 + offset );
+		GLushort offset = (GLushort) data->size();
+		
+		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
+		render::vertex  v1 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
+		render::vertex  v2 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f };
+		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 1.0f };
+
+		data->push_back( v0 );
+		data->push_back( v1 );
+		data->push_back( v2 );
+		data->push_back( v3 );
+
+
 		indices->push_back( 0 + offset );
-		indices->push_back( 3 + offset );
+		indices->push_back( 1 + offset );
+		indices->push_back( 2 + offset );
 	
-		indices->push_back( 5 + offset );
+		indices->push_back( 0 + offset );
+		indices->push_back( 2 + offset );
 		indices->push_back( 3 + offset );
-		indices->push_back( 6 + offset );
 	}
 	
 	// Top
 	if ( top )
 	{
-		indices->push_back( 3 + offset );
+		GLushort offset = (GLushort) data->size();
+
+		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 1.0f };
+		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 1.0f };
+
+		data->push_back( v0 );
+		data->push_back( v1 );
+		data->push_back( v2 );
+		data->push_back( v3 );
+
+
+		indices->push_back( 0 + offset );
+		indices->push_back( 1 + offset );
 		indices->push_back( 2 + offset );
-		indices->push_back( 7 + offset );
 	
+		indices->push_back( 0 + offset );
+		indices->push_back( 2 + offset );
 		indices->push_back( 3 + offset );
-		indices->push_back( 7 + offset );
-		indices->push_back( 6 + offset );
 	}
 	
 	// Bottom
 	if ( bottom )
 	{
-		indices->push_back( 5 + offset );
-		indices->push_back( 4 + offset );
-		indices->push_back( 1 + offset );
-	
-		indices->push_back( 5 + offset );
-		indices->push_back( 1 + offset );
+		GLushort offset = (GLushort) data->size();
+		
+		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 0.0f };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f };
+		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f };
+
+		data->push_back( v0 );
+		data->push_back( v1 );
+		data->push_back( v2 );
+		data->push_back( v3 );
+
+
 		indices->push_back( 0 + offset );
+		indices->push_back( 1 + offset );
+		indices->push_back( 2 + offset );
+	
+		indices->push_back( 0 + offset );
+		indices->push_back( 2 + offset );
+		indices->push_back( 3 + offset );
 	}
 }
 
@@ -170,7 +239,7 @@ void Chunk::_rebuild( void )
 //
 Chunk::Chunk( glm::vec3 pos, ChunkProvider* chunkProvider, bool active ) :
 	_chunkProvider( chunkProvider ),
-	_nullBlock( new Block( BlockType_Air, false ) ),
+	_nullBlock( new Block( BlockType_Air, true ) ),
 	_hasChanged( true ),
 	_buffer( new render::Buffer( pos ) ),
 	_position( pos ),
@@ -196,8 +265,8 @@ Chunk::Chunk( glm::vec3 pos, ChunkProvider* chunkProvider, bool active ) :
 								(y + pos.y) / WLD_FREQ,
 								(z + pos.z) / WLD_FREQ
 							)
-						) > WLD_DENSITY_THRES * (y / (WLD_CHUNK_SIZE * WLD_HEIGHT))
-						)
+						) < WLD_DENSITY_THRES
+					)
 					{
 						_blocks[x][y][z] = *new Block( BlockType_Dirt, true );
 					}

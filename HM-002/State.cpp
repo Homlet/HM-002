@@ -22,7 +22,7 @@ using namespace update;
 //
 State::State( void ) :
 	_bufferStack( new std::vector<render::Buffer> ),
-	_camera( std::shared_ptr<Camera>( new Player( glm::vec3( 0.0f, 0.0f, 0.0f ), 45.0f, 45.0f ) ) )
+	_camera( std::shared_ptr<Camera>( new Player( glm::vec3( 8.0f, 8.0f, 8.0f ), 45.0f, 45.0f ) ) )
 {
 
 }
@@ -31,10 +31,10 @@ State::State( void ) :
 // --------------------------------------------------------------------------------------------------------------------
 //  Runs logic for member entities, player and world. Takes the frame delta as a double in seconds
 //
-void State::update( double delta, Input* input )
+void State::update( double delta )
 {
 	_world.update( delta );
-	_camera->update( delta, input );
+	_camera->update( delta );
 }
 
 

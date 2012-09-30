@@ -101,7 +101,7 @@ void Camera::switchPolygonMode( void )
 // --------------------------------------------------------------------------------------------------------------------
 //  Runs basic camera logic
 //
-void Camera::update( double delta, Input* input )
+void Camera::update( double delta )
 {
 	_lastPolygonMode = _currentPolygonMode;
 	

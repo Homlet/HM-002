@@ -1,0 +1,17 @@
+<!--
+  TEXTURE FILES LISTED IN FOLLOWING FORMAT:
+  
+  <Texture   : new texture_object
+    name     : string format, name of texture (used for reference)
+    path     : filename, or relative or absolute path
+    w        : integer, width of texture in pixels
+    h        : integer, height of texture in pixels
+  />
+-->
+
+<Texture
+  name="sheet_block"
+  path=".\\textures\\sheets\\blocks.tga"
+  w="32"
+  h="32"
+/>

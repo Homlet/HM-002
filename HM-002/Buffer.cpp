@@ -129,21 +129,21 @@ void Buffer::render( const GLint type ) const
 {
 	bind();
 	glEnableVertexAttribArray( _attribLocationVertex );
-	glEnableVertexAttribArray( _attribLocationColor );
+	glEnableVertexAttribArray( _attribLocationUV );
 	glVertexAttribPointer(
 		_attribLocationVertex,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
-		16,
+		20,
 		(void*) 0
 	);
 	glVertexAttribPointer(
-		_attribLocationColor,
-		4,
-		GL_UNSIGNED_BYTE,
+		_attribLocationUV,
+		2,
+		GL_FLOAT,
 		GL_FALSE,
-		16,
+		20,
 		(void*) 12
 	);
 
@@ -155,6 +155,6 @@ void Buffer::render( const GLint type ) const
 	);
 
 	glDisableVertexAttribArray( _attribLocationVertex );
-	glDisableVertexAttribArray( _attribLocationColor );
+	glDisableVertexAttribArray( _attribLocationUV );
 	unbind();
 }
