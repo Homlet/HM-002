@@ -1,0 +1,35 @@
+<!--
+  BLOCK TYPES LISTED IN FOLLOWING FORMAT:
+  
+  <Block        : new Block
+    block_type  : integer, block type to associate parameters with (taken from update::world::block::BlockType)
+    s           : normalised float, texture s coordinate
+    t           : normalised float, texture t coordinate
+  />
+-->
+
+<Definitions>
+  <!-- BlockType_Dirt -->
+  <Block
+    block_type = "1"
+    r          = "2"
+  />
+
+  <!-- BlockType_Grass -->
+  <Block
+    block_type = "2"
+    r          = "0"
+  />
+
+  <!-- BlockType_Rock -->
+  <Block
+    block_type = "3"
+    r          = "3"
+  />
+
+  <!-- BlockType_Sand -->
+  <Block
+    block_type = "4"
+    r          = "4"
+  />
+</Definitions>

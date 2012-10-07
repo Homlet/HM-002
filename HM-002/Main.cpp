@@ -42,7 +42,11 @@ int main(int argc, char* argv[])
 		exit( EXIT_FAILURE );
 	}
 
-	fprintf( stdout, "GLEW successfully initialised." );
+	fprintf( stdout, "GLEW successfully initialised.\n" );
+
+	checkExtensions();
+
+	fprintf( stdout, "\n\n" );
 
 	double delta = 0.0, frame = 0.0, frame_old = 0.0;
 	update::State state;
@@ -101,8 +105,7 @@ int main(int argc, char* argv[])
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Function that creates a glfw window as specified by the "WIN_" macros
-//  in Main.h, and returns the status
+//  Function that creates a glfw window as specified by the "WIN_" macros in Main.h, and returns the status
 //
 int initializeWindow( void )
 {
@@ -127,10 +130,26 @@ int initializeWindow( void )
 
 	if ( window )
 	{
-		fprintf( stdout, "Window successfully created\n" );
+		fprintf( stdout, "Window successfully created.\n" );
 
 		glfwSetWindowTitle( WIN_TITLE );
 	}
 
 	return window;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Function that checks required OpenGL extensions via GLEW
+//
+void checkExtensions( void )
+{
+	if ( !GLEW_EXT_texture_array )
+	{
+		fprintf( stdout, "FATAL: EXT_texture_array not supported. Program will now terminate." );
+		glfwTerminate();
+		exit( EXIT_FAILURE );
+	}
+
+	fprintf( stdout, "All required OpenGL extensions are supported.\n" );
 }

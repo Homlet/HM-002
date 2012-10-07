@@ -9,3 +9,4 @@
 // ----------------------------------------------------------------------------
 
 int initializeWindow( void );
+void checkExtensions( void );

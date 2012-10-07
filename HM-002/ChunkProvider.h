@@ -21,7 +21,7 @@ namespace update
 			std::hash_map<
 				glm::ivec3,
 				Chunk*,
-				HashConfig
+				hashdef::hash_glm_ivec3
 			> _chunkMap;
 
 			Chunk* _nullChunk;

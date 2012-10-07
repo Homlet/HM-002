@@ -94,15 +94,26 @@ Shader::Shader( const char* vertFilePath, const char* fragFilePath ) :
 	_uniformLocationMat4MV            = glGetUniformLocation( _programID, "MV" );
 	_uniformLocationMat4P             = glGetUniformLocation( _programID, "P" );
 	_uniformLocationVec4Fog_Color     = glGetUniformLocation( _programID, "Fog_Color" );
-
+	
 	_uniformLocation1iTexture_Sampler = glGetUniformLocation( _programID, "Texture_Sampler" );
+	_uniformLocation1iTexture_Array_Sampler = glGetUniformLocation( _programID, "Texture_Array_Sampler" );
 
-	// Setup texture sampler
+	// Setup texture samplers
 	bind();
 
-	glUniform1i( _uniformLocation1iTexture_Sampler, 2 );
+	glActiveTexture( GL_TEXTURE0 + 1 );
+	
+	glUniform1i( _uniformLocation1iTexture_Sampler, 1 );
 	glGenSamplers( 1, &_samplerLocationTexture_Sampler );
-	glBindSampler( 2, _samplerLocationTexture_Sampler );
+	glBindSampler( 1, _samplerLocationTexture_Sampler );
+	
+	glActiveTexture( GL_TEXTURE0 + 2 );
+
+	glUniform1i( _uniformLocation1iTexture_Array_Sampler, 2 );
+	glGenSamplers( 1, &_samplerLocationTexture_Array_Sampler );
+	glBindSampler( 2, _samplerLocationTexture_Array_Sampler );
+	
+	glActiveTexture( GL_TEXTURE0 );
 
 	unbind();
 }

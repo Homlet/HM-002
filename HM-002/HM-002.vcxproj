@@ -107,9 +107,16 @@
     <ClInclude Include="WorldMacros.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="block_def.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="shader.frag" />
     <None Include="shader.vert" />
-    <None Include="textures\sheets\blocks.tga" />
+    <None Include="textures\block_dirt.tga" />
+    <None Include="textures\block_grass_side.tga" />
+    <None Include="textures\block_grass_top.tga" />
+    <None Include="textures\block_rock.tga" />
+    <None Include="textures\block_sand.tga" />
     <None Include="texture_def.xml">
       <SubType>Designer</SubType>
     </None>

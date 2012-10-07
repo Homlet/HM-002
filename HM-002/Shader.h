@@ -19,7 +19,9 @@ namespace render
 		GLuint _uniformLocationVec4Fog_Color;
 		
 		GLuint _uniformLocation1iTexture_Sampler;
+		GLuint _uniformLocation1iTexture_Array_Sampler;
 		GLuint _samplerLocationTexture_Sampler;
+		GLuint _samplerLocationTexture_Array_Sampler;
 	public:
 		Shader( const char* vertFilePath, const char* fragFilePath );
 

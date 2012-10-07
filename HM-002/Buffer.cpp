@@ -135,15 +135,15 @@ void Buffer::render( const GLint type ) const
 		3,
 		GL_FLOAT,
 		GL_FALSE,
-		20,
+		24,
 		(void*) 0
 	);
 	glVertexAttribPointer(
 		_attribLocationUV,
-		2,
+		3,
 		GL_FLOAT,
 		GL_FALSE,
-		20,
+		24,
 		(void*) 12
 	);
 

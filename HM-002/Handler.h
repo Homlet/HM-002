@@ -3,6 +3,9 @@
 
 #pragma once
 
+#define _DEFINE_DEPRECATED_HASH_CLASSES 0
+#include <hash_map>
+
 
 // ----------------------------------------------------------------------------
 //  DECLARATIONS
@@ -17,7 +20,11 @@ namespace render
 		Shader   _shader;
 		Matrices _matrices;
 
-		std::vector<texture_object> _textures;
+		std::hash_map<
+			std::string,
+			texture_object,
+			hashdef::hash_std_string
+		> _textures;
 	public:
 		Handler( void );
 

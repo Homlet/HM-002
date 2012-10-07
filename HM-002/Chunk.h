@@ -3,6 +3,9 @@
 
 #pragma once
 
+#define _DEFINE_DEPRECATED_HASH_CLASSES 0
+#include <hash_map>
+
 
 // ----------------------------------------------------------------------------
 //  DECLARATIONS
@@ -14,17 +17,17 @@ namespace update
 	{
 		class Chunk {
 		private:
-			static void _createBlockBuffer(
-				int x,
-				int y,
-				int z,
+			void _createBlockBuffer(
+				float x,
+				float y,
+				float z,
 				bool front,
 				bool back,
 				bool right,
 				bool left,
 				bool top,
 				bool bottom,
-				BlockType type,
+				block::BlockType type,
 				std::vector<render::vertex>* data,
 				std::vector<GLushort>* indices
 			);
@@ -34,6 +37,11 @@ namespace update
 			Block*** _blocks;
 			Block* _nullBlock;
 			
+			std::hash_map<
+				block::BlockType,
+				block::data
+			>* _blockData;
+			
 			render::Buffer* _buffer;
 			bool _hasChanged;
 			void _rebuild( void );
@@ -42,7 +50,15 @@ namespace update
 
 			bool _active;
 		public:
-			Chunk( glm::vec3 pos, ChunkProvider* chunkProvider, bool active );
+			Chunk(
+				glm::vec3 pos,
+				ChunkProvider* chunkProvider,
+				std::hash_map<
+					block::BlockType,
+					block::data
+				>* blockData,
+				bool active
+			);
 			~Chunk( void );
 
 			void update( double delta );

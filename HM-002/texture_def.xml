@@ -1,17 +1,47 @@
 <!--
   TEXTURE FILES LISTED IN FOLLOWING FORMAT:
   
+  <Array     : new 2d texture array
+    name     : string format, name of texture array
+  />
+  
   <Texture   : new texture_object
-    name     : string format, name of texture (used for reference)
+    name     : string format, name of texture (ignored for array members)
     path     : filename, or relative or absolute path
-    w        : integer, width of texture in pixels
-    h        : integer, height of texture in pixels
+    w        : integer, width of texture in pixels (ignored for array members)
+    h        : integer, height of texture in pixels (ignored for array members)
   />
 -->
 
-<Texture
-  name="sheet_block"
-  path=".\\textures\\sheets\\blocks.tga"
-  w="32"
-  h="32"
-/>
+<Definitions>
+  <Array
+    name = "blocks"
+    w    = "16"
+    h    = "16"
+  >
+    <!-- Grass top tile -->
+    <Texture
+      path = ".\\textures\\block_grass_top.tga"
+    />
+
+    <!-- Grass side tile -->
+    <Texture
+      path = ".\\textures\\block_grass_side.tga"
+    />
+
+    <!-- Dirt tile -->
+    <Texture
+      path = ".\\textures\\block_dirt.tga"
+    />
+
+    <!-- Rock tile -->
+    <Texture
+      path = ".\\textures\\block_rock.tga"
+    />
+
+    <!-- Sand tile -->
+    <Texture
+      path = ".\\textures\\block_sand.tga"
+    />
+  </Array>
+</Definitions>

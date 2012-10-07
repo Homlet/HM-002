@@ -3,8 +3,6 @@
 
 #include "Base.h"
 
-#include "rapidxml.hpp"
-
 #include "Loader.h"
 
 using namespace render::texture;
@@ -27,18 +25,59 @@ Loader::Loader( void )
 //
 GLuint Loader::_loadTexture( char* path, int w, int h ) const
 {
+	glActiveTexture( GL_TEXTURE0 + 1 );
+
 	GLuint id;
 	glGenTextures( 1, &id );
 	glBindTexture( GL_TEXTURE_2D, id );
 
 	unsigned char* data = _rawRGB_TGA( path, &w, &h );
-
-	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB8, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, &data[0] );
+	
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
+	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, &data[0] );
 	glGenerateMipmap( GL_TEXTURE_2D );
 
 	glBindTexture( GL_TEXTURE_2D, 0 );
+	
+	glActiveTexture( GL_TEXTURE0 );
+
+	return id;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Binds, buffers texture array from raw data
+//
+GLuint Loader::_loadTextureArray( char** paths, int count, int w, int h ) const
+{
+	glActiveTexture( GL_TEXTURE0 + 2 );
+
+	GLuint id;
+	glGenTextures( 1, &id );
+	glBindTexture( GL_TEXTURE_2D_ARRAY, id );
+	
+	glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+	glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_S, GL_REPEAT );
+	glTexParameteri( GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
+	glTexImage3D( GL_TEXTURE_2D_ARRAY, 0, GL_RGBA8, w, h, count, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0 );
+
+	for ( int i = 0; i < count; i++ )
+	{
+		unsigned char* data = _rawRGB_TGA( paths[i], &w, &h );
+		glTexSubImage3D( GL_TEXTURE_2D_ARRAY, 0, 0, 0, i, w, h, 1, GL_RGBA, GL_UNSIGNED_BYTE, &data[0] );
+	}
+
+	glGenerateMipmap( GL_TEXTURE_2D_ARRAY );
+
+	glBindTexture( GL_TEXTURE_2D_ARRAY, 0 );
+	
+	glActiveTexture( GL_TEXTURE0 );
 
 	return id;
 }
@@ -185,11 +224,13 @@ Loader* Loader::getInstance( void )
 //     -> w      : integer, width of texture in pixels
 //     -> h      : integer, height of texture in pixels
 //
-std::vector<render::texture_object>* Loader::loadFromXML( char* path ) const
+std::hash_map<std::string, render::texture_object, hashdef::hash_std_string>* Loader::loadFromXML( char* path ) const
 {
-	glActiveTexture( GL_TEXTURE0 + 2 );
-
-	std::vector<render::texture_object>* textureObjectVector= new std::vector<render::texture_object>();
+	std::hash_map<
+		std::string,
+		render::texture_object,
+		hashdef::hash_std_string
+	>* textureObjectMap = new std::hash_map<std::string, render::texture_object, hashdef::hash_std_string>();
 
 	using namespace rapidxml;
 
@@ -216,22 +257,58 @@ std::vector<render::texture_object>* Loader::loadFromXML( char* path ) const
 	// Create and parse XML document
 	xml_document<> xml;
 	xml.parse<0>( &xmlRaw[0] );
-	xml_node<>* textureNode = xml.first_node( "Texture" );
+	xml_node<>* arrayNode = xml.first_node( "Definitions" )->first_node( "Array" );
+
+	// First check for array textures
+	while ( arrayNode )
+	{
+		// Load individual textures within array
+		xml_node<>* textureNode = arrayNode->first_node( "Texture" );
+		std::vector<char*> paths;
+		int count = 0;
+		while ( textureNode != 0 )
+		{
+			// Push each texture uri to the vector, increment count
+			paths.push_back( textureNode->first_attribute( "path" )->value() );
+			count++;
+
+			textureNode = textureNode->next_sibling();
+		}
+		
+		// Load array attributes
+		xml_attribute<>* name = arrayNode->first_attribute( "name" );
+		xml_attribute<>* w = arrayNode->first_attribute( "w" );
+		xml_attribute<>* h = arrayNode->first_attribute( "h" );
+
+		// Bind and buffer data, get id
+		GLuint id = _loadTextureArray( &paths[0], count, std::stoi( w->value() ), std::stoi( h->value() ) );
+
+		// Create texture object for array, push it to the final map
+		texture_object temp = { id, std::stoi( w->value() ), std::stoi( h->value() ), true };
+		(*textureObjectMap)[name->value()] = temp;
+
+		arrayNode = arrayNode->next_sibling();
+	}
+	
+	// Then individual textures
+	xml_node<>* textureNode = xml.first_node( "Definitions" )->first_node( "Texture" );
 	while ( textureNode != 0 )
 	{
+		// Load texture attributes
 		xml_attribute<>* name = textureNode->first_attribute( "name" );
 		xml_attribute<>* path = textureNode->first_attribute( "path" );
 		xml_attribute<>* w = textureNode->first_attribute( "w" );
 		xml_attribute<>* h = textureNode->first_attribute( "h" );
-
+		
+		// Bind and buffer data, get id
 		GLuint id = _loadTexture( path->value(), std::stoi( w->value() ), std::stoi( h->value() ) );
-
-		texture_object temp = { name->value(), id, std::stoi( w->value() ), std::stoi( h->value() ) };
-
-		textureObjectVector->push_back( temp );
+		
+		// Create texture object for array, push it to the final map
+		texture_object temp = { id, std::stoi( w->value() ), std::stoi( h->value() ), false };
+		(*textureObjectMap)[name->value()] = temp;
 
 		textureNode = textureNode->next_sibling();
 	}
 	
-	return textureObjectVector;
+	return textureObjectMap;
 }

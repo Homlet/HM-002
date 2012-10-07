@@ -11,7 +11,7 @@ using namespace update::world;
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates new block with specified parameters
 //
-Block::Block( BlockType type, bool active ) :
+Block::Block( block::BlockType type, bool active ) :
 	_type( type ),
 	_isActive( active )
 {
@@ -40,7 +40,7 @@ void Block::setActive( bool active )
 // --------------------------------------------------------------------------------------------------------------------
 //  Returns _type
 //
-BlockType Block::getType( void ) const
+block::BlockType Block::getType( void ) const
 {
 	return _type;
 }
@@ -49,7 +49,7 @@ BlockType Block::getType( void ) const
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets _type to specified value
 //
-void Block::setType( BlockType type )
+void Block::setType( block::BlockType type )
 {
 	_type = type;
 }

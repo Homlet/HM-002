@@ -55,9 +55,6 @@
     <Filter Include="Resource Files\textures">
       <UniqueIdentifier>{f5a62d06-10dd-4ab4-9923-78e44cd93dc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\textures\sheets">
-      <UniqueIdentifier>{4f692d93-bed0-4320-b895-7a3a29636dd1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -181,8 +178,23 @@
     <None Include="texture_def.xml">
       <Filter>Resource Files\xml</Filter>
     </None>
-    <None Include="textures\sheets\blocks.tga">
-      <Filter>Resource Files\textures\sheets</Filter>
+    <None Include="block_def.xml">
+      <Filter>Resource Files\xml</Filter>
+    </None>
+    <None Include="textures\block_dirt.tga">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="textures\block_grass_side.tga">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="textures\block_grass_top.tga">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="textures\block_rock.tga">
+      <Filter>Resource Files\textures</Filter>
+    </None>
+    <None Include="textures\block_sand.tga">
+      <Filter>Resource Files\textures</Filter>
     </None>
   </ItemGroup>
 </Project>

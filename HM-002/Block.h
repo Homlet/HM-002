@@ -16,15 +16,18 @@ namespace update
 		private:
 			bool _isActive;
 
-			BlockType _type;
+			block::BlockType _type;
 		public:
-			Block( BlockType type = BlockType_Air, bool active = false );
+			Block(
+				block::BlockType type = block::BlockType_Air,
+				bool active = false
+			);
 
 			bool getActive( void ) const;
 			void setActive( bool active );
 			
-			BlockType getType( void ) const;
-			void setType( BlockType type );
+			block::BlockType getType( void ) const;
+			void setType( block::BlockType type );
 		};
 	}
 }

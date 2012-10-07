@@ -3,6 +3,11 @@
 
 #pragma once
 
+#define _DEFINE_DEPRECATED_HASH_CLASSES 0
+#include <hash_map>
+
+#include "rapidxml.hpp"
+
 
 // ----------------------------------------------------------------------------
 //  DECLARATIONS
@@ -24,6 +29,13 @@ namespace render
 				int h
 			) const;
 
+			GLuint _loadTextureArray(
+				char** paths,
+				int count,
+				int w,
+				int h
+			) const;
+
 			unsigned char* _rawRGB_TGA(
 				char* filename,
 				int* w,
@@ -32,7 +44,11 @@ namespace render
 		public:
 			static Loader* getInstance( void );
 
-			std::vector<texture_object>* loadFromXML( char* uri ) const;
+			std::hash_map<
+				std::string,
+				render::texture_object,
+				hashdef::hash_std_string
+			>* loadFromXML( char* uri ) const;
 		};
 	}
 }

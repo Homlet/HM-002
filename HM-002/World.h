@@ -3,6 +3,11 @@
 
 #pragma once
 
+#define _DEFINE_DEPRECATED_HASH_CLASSES 0
+#include <hash_map>
+
+#include "rapidxml.hpp"
+
 
 // ----------------------------------------------------------------------------
 //  DECLARATIONS
@@ -15,7 +20,17 @@ namespace update
 		world::ChunkProvider* _chunkProvider;
 
 		std::vector<render::Buffer>* _bufferStack;
+
+		std::hash_map<
+			world::block::BlockType,
+			world::block::data
+		>* _blockData;
 	public:
+		static std::hash_map<
+			world::block::BlockType,
+			world::block::data
+		>* loadBlockDataFromXML( char* path );
+
 		World( void );
 		~World( void );
 

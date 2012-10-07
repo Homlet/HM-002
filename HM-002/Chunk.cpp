@@ -18,40 +18,31 @@ using namespace update::world;
 //  Returns a vector filled with vertex data for a cube
 //
 void Chunk::_createBlockBuffer(
-	int x,
-	int y,
-	int z,
+	float x,
+	float y,
+	float z,
 	bool front,
 	bool back,
 	bool right,
 	bool left,
 	bool top,
 	bool bottom,
-	BlockType type,
+	block::BlockType type,
 	std::vector<render::vertex>* data,
 	std::vector<GLushort>* indices
 )
 {
-	//render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
-	//render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
-	//render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
-	//render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
+	GLfloat r = (GLfloat) _blockData->at( type ).r;
 
-	//render::vertex  v4 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
-	//render::vertex  v5 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
-	//render::vertex  v6 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
-	//render::vertex  v7 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
-
-	
 	// Front
 	if ( front )
 	{
 		GLushort offset = (GLushort) data->size();
 
-		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f };
-		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f };
+		render::vertex  v0 = { x                 , y                 , z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y                 , z + WLD_BLOCK_SIZE, 1.0f, 0.0f, r };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f, r };
+		render::vertex  v3 = { x                 , y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -73,10 +64,10 @@ void Chunk::_createBlockBuffer(
 	{
 		GLushort offset = (GLushort) data->size();
 
-		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
-		render::vertex  v1 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 0.0f };
-		render::vertex  v2 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 1.0f };
-		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 1.0f };
+		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y                 , z                 , 0.0f, 0.0f, r };
+		render::vertex  v1 = { x                 , y                 , z                 , 1.0f, 0.0f, r };
+		render::vertex  v2 = { x                 , y + WLD_BLOCK_SIZE, z                 , 1.0f, 1.0f, r };
+		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z                 , 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -98,10 +89,10 @@ void Chunk::_createBlockBuffer(
 	{
 		GLushort offset = (GLushort) data->size();
 		
-		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 0.0f };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 1.0f };
-		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f };
+		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y                 , z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y                 , z                 , 1.0f, 0.0f, r };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z                 , 1.0f, 1.0f, r };
+		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -123,10 +114,10 @@ void Chunk::_createBlockBuffer(
 	{
 		GLushort offset = (GLushort) data->size();
 		
-		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
-		render::vertex  v1 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
-		render::vertex  v2 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f };
-		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 1.0f };
+		render::vertex  v0 = { x                 , y                 , z                 , 0.0f, 0.0f, r };
+		render::vertex  v1 = { x                 , y                 , z + WLD_BLOCK_SIZE, 1.0f, 0.0f, r };
+		render::vertex  v2 = { x                 , y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f, r };
+		render::vertex  v3 = { x                 , y + WLD_BLOCK_SIZE, z                 , 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -148,10 +139,10 @@ void Chunk::_createBlockBuffer(
 	{
 		GLushort offset = (GLushort) data->size();
 
-		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 1.0f };
-		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 1.0f };
+		render::vertex  v0 = { x                 , y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f, r };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z                 , 1.0f, 1.0f, r };
+		render::vertex  v3 = { x                 , y + WLD_BLOCK_SIZE, z                 , 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -173,10 +164,10 @@ void Chunk::_createBlockBuffer(
 	{
 		GLushort offset = (GLushort) data->size();
 		
-		render::vertex  v0 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 0.0f, 0.0f };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z - WLD_BLOCK_SIZE, 1.0f, 0.0f };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f };
-		render::vertex  v3 = { x - WLD_BLOCK_SIZE, y - WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f };
+		render::vertex  v0 = { x                 , y                 , z                 , 0.0f, 0.0f, r };
+		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y                 , z                 , 1.0f, 0.0f, r };
+		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y                 , z + WLD_BLOCK_SIZE, 1.0f, 1.0f, r };
+		render::vertex  v3 = { x                 , y                 , z + WLD_BLOCK_SIZE, 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -220,7 +211,7 @@ void Chunk::_rebuild( void )
 				bottom = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x, y - 1, z ) )->getActive();
 
 				_createBlockBuffer(
-					x, y, z,
+					(float) x, (float) y, (float) z,
 					front, back, right, left, top, bottom,
 					_blocks[x][y][z].getType(),
 					data,
@@ -237,11 +228,20 @@ void Chunk::_rebuild( void )
 // --------------------------------------------------------------------------------------------------------------------
 //  Fills _blocks according to a 3d simplex noise function
 //
-Chunk::Chunk( glm::vec3 pos, ChunkProvider* chunkProvider, bool active ) :
+Chunk::Chunk(
+	glm::vec3 pos,
+	ChunkProvider* chunkProvider,
+	std::hash_map<
+		block::BlockType,
+		block::data
+	>* blockData,
+	bool active
+) :
 	_chunkProvider( chunkProvider ),
-	_nullBlock( new Block( BlockType_Air, true ) ),
-	_hasChanged( true ),
+	_nullBlock( new Block( block::BlockType_Air, true ) ),
+	_blockData( blockData ),
 	_buffer( new render::Buffer( pos ) ),
+	_hasChanged( true ),
 	_position( pos ),
 	_active( active )
 {
@@ -268,7 +268,20 @@ Chunk::Chunk( glm::vec3 pos, ChunkProvider* chunkProvider, bool active ) :
 						) < WLD_DENSITY_THRES
 					)
 					{
-						_blocks[x][y][z] = *new Block( BlockType_Dirt, true );
+						if ( glm::simplex(
+							glm::vec3(
+								(x + pos.x) / 16.0f,
+								(y + pos.y) / 16.0f,
+								(z + pos.z) / 16.0f
+							)
+						) < WLD_DENSITY_THRES
+						)
+						{
+							_blocks[x][y][z] = *new Block( block::BlockType_Rock, true );
+						} else
+						{
+							_blocks[x][y][z] = *new Block( block::BlockType_Dirt, true );
+						}
 					}
 				}
 			}
