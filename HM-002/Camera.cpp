@@ -90,7 +90,7 @@ void Camera::switchPolygonMode( void )
 	break;
 
 	default:
-		fprintf( stdout, "Error: Invalid polygon mode specified; switching to GL_FILL" );
+		fprintf( stderr, "Error: Invalid polygon mode specified; switching to GL_FILL" );
 		_lastPolygonMode = 0;
 		_currentPolygonMode = GL_FILL;
 	break;

@@ -1,19 +1,19 @@
-// "ChunkProvider.cpp"
+// "Provider.cpp"
 //
 
 #include "WorldMacros.h"
 
 #include "Base.h"
 
-#include "ChunkProvider.h"
+#include "Provider.h"
 
-using namespace update::world;
+using namespace update::world::chunk;
 
 
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets _nullChunk
 //
-ChunkProvider::ChunkProvider( Chunk* nullChunk ) :
+Provider::Provider( update::world::Chunk* nullChunk ) :
 	_nullChunk( nullChunk )
 {
 
@@ -21,9 +21,9 @@ ChunkProvider::ChunkProvider( Chunk* nullChunk ) :
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Deletes all chunks in hashmap, deletes _nullChunk
+//  Deletes keys and map
 //
-ChunkProvider::~ChunkProvider( void )
+Provider::~Provider( void )
 {
 	_chunkMap.clear();
 }
@@ -32,7 +32,7 @@ ChunkProvider::~ChunkProvider( void )
 // --------------------------------------------------------------------------------------------------------------------
 //  Adds chunk pointer to the specified position in the hashmap
 //
-void ChunkProvider::insertChunk( glm::ivec3 chunkPos, Chunk* chunk )
+void Provider::insertChunk( glm::ivec3 chunkPos, update::world::Chunk* chunk )
 {
 	_chunkMap[chunkPos] = chunk;
 }
@@ -42,7 +42,7 @@ void ChunkProvider::insertChunk( glm::ivec3 chunkPos, Chunk* chunk )
 //  Returns pointer to the chunk at the specified position
 //  Returns _nullChunk if key is not registered
 //
-Chunk* ChunkProvider::getChunk( glm::ivec3 chunkPos ) const
+update::world::Chunk* Provider::getChunk( glm::ivec3 chunkPos ) const
 {
 	return ( _chunkMap.find( chunkPos ) == _chunkMap.end() ) ? _nullChunk : _chunkMap.at( chunkPos );
 }

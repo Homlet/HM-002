@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Chunk.h"
-#include "ChunkProvider.h"
+#include "Provider.h"
 #include "World.h"
 #include "Entity.h"
 
@@ -22,9 +22,22 @@ using namespace update;
 //
 State::State( void ) :
 	_bufferStack( new std::vector<render::Buffer> ),
-	_camera( std::shared_ptr<Camera>( new Player( glm::vec3( 8.0f, 8.0f, 8.0f ), 45.0f, 45.0f ) ) )
+	_camera( std::shared_ptr<Camera>( new Player( glm::vec3( 8.0f, 8.0f, 8.0f ), 45.0f, 45.0f ) ) ),
+	_world( new World() )
 {
 
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Cleanup for world and bufferstack
+//
+State::~State( void )
+{
+	delete[] _bufferStack;
+	delete _bufferStack;
+	
+	delete _world;
 }
 
 
@@ -33,8 +46,14 @@ State::State( void ) :
 //
 void State::update( double delta )
 {
-	_world.update( delta );
+	_world->update( delta );
 	_camera->update( delta );
+
+	if ( keyinput::getKeyDown( GLFW_KEY_F5, true ) )
+	{
+		delete _world;
+		_world = new World();
+	}
 }
 
 
@@ -45,7 +64,7 @@ std::vector<render::Buffer>* State::getBuffers( void ) const
 {
 	_bufferStack->clear();
 
-	std::vector<render::Buffer>* tempStack = _world.getBuffers();
+	std::vector<render::Buffer>* tempStack = _world->getBuffers();
 	_bufferStack->insert( _bufferStack->end(), tempStack->begin(), tempStack->end() );
 	
 	return _bufferStack;

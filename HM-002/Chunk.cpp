@@ -7,7 +7,9 @@
 
 #include "Buffer.h"
 #include "Block.h"
-#include "ChunkProvider.h"
+#include "Provider.h"
+#include "noise\noise.h"
+#include "Generator.h"
 
 #include "Chunk.h"
 
@@ -32,11 +34,13 @@ void Chunk::_createBlockBuffer(
 	std::vector<GLushort>* indices
 )
 {
-	GLfloat r = (GLfloat) _blockData->at( type ).r;
+	GLfloat r;
 
 	// Front
 	if ( front )
 	{
+		r = (GLfloat) _blockData->at( type ).getBlockTextureBySide( GBL_FRONT );
+
 		GLushort offset = (GLushort) data->size();
 
 		render::vertex  v0 = { x                 , y                 , z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
@@ -62,6 +66,8 @@ void Chunk::_createBlockBuffer(
 	// Back
 	if ( back )
 	{
+		r = (GLfloat) _blockData->at( type ).getBlockTextureBySide( GBL_BACK );
+
 		GLushort offset = (GLushort) data->size();
 
 		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y                 , z                 , 0.0f, 0.0f, r };
@@ -87,6 +93,8 @@ void Chunk::_createBlockBuffer(
 	// Right
 	if ( right )
 	{
+		r = (GLfloat) _blockData->at( type ).getBlockTextureBySide( GBL_RIGHT );
+
 		GLushort offset = (GLushort) data->size();
 		
 		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y                 , z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
@@ -112,6 +120,8 @@ void Chunk::_createBlockBuffer(
 	// Left
 	if ( left )
 	{
+		r = (GLfloat) _blockData->at( type ).getBlockTextureBySide( GBL_LEFT );
+
 		GLushort offset = (GLushort) data->size();
 		
 		render::vertex  v0 = { x                 , y                 , z                 , 0.0f, 0.0f, r };
@@ -137,6 +147,8 @@ void Chunk::_createBlockBuffer(
 	// Top
 	if ( top )
 	{
+		r = (GLfloat) _blockData->at( type ).getBlockTextureBySide( GBL_TOP );
+
 		GLushort offset = (GLushort) data->size();
 
 		render::vertex  v0 = { x                 , y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
@@ -162,6 +174,8 @@ void Chunk::_createBlockBuffer(
 	// Bottom
 	if ( bottom )
 	{
+		r = (GLfloat) _blockData->at( type ).getBlockTextureBySide( GBL_BOTTOM );
+
 		GLushort offset = (GLushort) data->size();
 		
 		render::vertex  v0 = { x                 , y                 , z                 , 0.0f, 0.0f, r };
@@ -230,10 +244,11 @@ void Chunk::_rebuild( void )
 //
 Chunk::Chunk(
 	glm::vec3 pos,
-	ChunkProvider* chunkProvider,
+	chunk::Provider*  chunkProvider,
+	chunk::Generator* chunkGenerator,
 	std::hash_map<
 		block::BlockType,
-		block::data
+		block_data
 	>* blockData,
 	bool active
 ) :
@@ -247,45 +262,7 @@ Chunk::Chunk(
 {
 	if ( _active )
 	{
-		_blocks = new Block**[WLD_CHUNK_SIZE];
-
-		for ( int x = 0; x < WLD_CHUNK_SIZE; x++ )
-		{
-			_blocks[x] = new Block*[WLD_CHUNK_SIZE];
-
-			for ( int y = 0; y < WLD_CHUNK_SIZE; y++ )
-			{
-				_blocks[x][y] = new Block[WLD_CHUNK_SIZE];
-
-				for ( int z = 0; z < WLD_CHUNK_SIZE; z++ )
-				{
-					if ( glm::simplex(
-							glm::vec3(
-								(x + pos.x) / WLD_FREQ,
-								(y + pos.y) / WLD_FREQ,
-								(z + pos.z) / WLD_FREQ
-							)
-						) < WLD_DENSITY_THRES
-					)
-					{
-						if ( glm::simplex(
-							glm::vec3(
-								(x + pos.x) / 16.0f,
-								(y + pos.y) / 16.0f,
-								(z + pos.z) / 16.0f
-							)
-						) < WLD_DENSITY_THRES
-						)
-						{
-							_blocks[x][y][z] = *new Block( block::BlockType_Rock, true );
-						} else
-						{
-							_blocks[x][y][z] = *new Block( block::BlockType_Dirt, true );
-						}
-					}
-				}
-			}
-		}
+		chunkGenerator->setChunk( pos, &_blocks );
 	}
 }
 
@@ -298,12 +275,7 @@ Chunk::~Chunk( void )
 	for (int x = 0; x < WLD_CHUNK_SIZE; x++)
 	{
 		for ( int y = 0; y < WLD_CHUNK_SIZE; y++ )
-		{
-			for ( int z = 0; z < WLD_CHUNK_SIZE; z++ )
-				delete &_blocks[x][y][z];
-			
 			delete [] _blocks[x][y];
-		}
 		
 		delete [] _blocks[x];
 	}

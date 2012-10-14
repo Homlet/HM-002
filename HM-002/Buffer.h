@@ -28,6 +28,7 @@ namespace render
 			std::vector<GLushort>* indices,
 			glm::vec3 pos
 		);
+		~Buffer( void );
 
 		void setData( const vertex* data, int count ) const;
 		void setIndices( const GLushort* indices, int count );

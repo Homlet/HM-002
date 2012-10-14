@@ -32,14 +32,14 @@ namespace update
 				std::vector<GLushort>* indices
 			);
 
-			const ChunkProvider* _chunkProvider;
+			const chunk::Provider* _chunkProvider;
 
 			Block*** _blocks;
-			Block* _nullBlock;
+			Block*    _nullBlock;
 			
 			std::hash_map<
 				block::BlockType,
-				block::data
+				block_data
 			>* _blockData;
 			
 			render::Buffer* _buffer;
@@ -52,10 +52,11 @@ namespace update
 		public:
 			Chunk(
 				glm::vec3 pos,
-				ChunkProvider* chunkProvider,
+				chunk::Provider*  chunkProvider,
+				chunk::Generator* chunkGenerator,
 				std::hash_map<
 					block::BlockType,
-					block::data
+					block_data
 				>* blockData,
 				bool active
 			);

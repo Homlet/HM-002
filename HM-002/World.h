@@ -17,18 +17,19 @@ namespace update
 {
 	class World {
 	private:
-		world::ChunkProvider* _chunkProvider;
+		world::chunk::Provider*  _chunkProvider;
+		world::chunk::Generator* _chunkGenerator;
 
 		std::vector<render::Buffer>* _bufferStack;
 
 		std::hash_map<
 			world::block::BlockType,
-			world::block::data
+			world::block_data
 		>* _blockData;
 	public:
 		static std::hash_map<
 			world::block::BlockType,
-			world::block::data
+			world::block_data
 		>* loadBlockDataFromXML( char* path );
 
 		World( void );

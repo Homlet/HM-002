@@ -10,7 +10,7 @@ uniform mat4 MV;
 uniform mat4 P;
 
 const float LOG2 = 1.442695;
-const float FOG_CONSTANT = 0.035;
+const float FOG_CONSTANT = 0.015;
 const float MIN_POINT_SIZE = 4.0;
 const float MAX_POINT_SIZE = 120.0;
 const float POINT_DISTANCE_MULT = 10.0;

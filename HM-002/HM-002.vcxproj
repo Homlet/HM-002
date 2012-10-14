@@ -41,13 +41,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\Sam\Documents\C++\rapidxml-1.13;C:\Users\Sam\Documents\C++\glew-1.9.0\include;C:\Users\Sam\Documents\C++\glm-0.9.3.4;C:\Users\Sam\Documents\C++\glfw-2.7.6.bin.WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Sam\Documents\C++\libnoise\include;C:\Users\Sam\Documents\C++\rapidxml-1.13;C:\Users\Sam\Documents\C++\glew-1.9.0\include;C:\Users\Sam\Documents\C++\glm-0.9.3.4;C:\Users\Sam\Documents\C++\glfw-2.7.6.bin.WIN32\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;glfw.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\Sam\Documents\C++\glew-1.9.0\lib;C:\Users\Sam\Documents\C++\glfw-2.7.6.bin.WIN32\lib-msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;glfw.lib;opengl32.lib;libnoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Sam\Documents\C++\libnoise\bin;C:\Users\Sam\Documents\C++\glew-1.9.0\lib;C:\Users\Sam\Documents\C++\glfw-2.7.6.bin.WIN32\lib-msvc100;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -70,7 +70,8 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Chunk.cpp" />
-    <ClCompile Include="ChunkProvider.cpp" />
+    <ClCompile Include="Generator.cpp" />
+    <ClCompile Include="Provider.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -90,10 +91,12 @@
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Chunk.h" />
-    <ClInclude Include="ChunkProvider.h" />
+    <ClInclude Include="Generator.h" />
+    <ClInclude Include="Provider.h" />
     <ClInclude Include="ColorMacros.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="OGLMacros.h" />
     <ClInclude Include="Handler.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Loader.h" />

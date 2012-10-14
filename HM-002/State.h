@@ -15,9 +15,10 @@ namespace update
 		std::vector<render::Buffer>* _bufferStack;
 		std::vector<Entity>          _entityStack;
 		std::shared_ptr<Camera>      _camera;
-		World                        _world;
+		World*                       _world;
 	public:
 		State( void );
+		~State( void );
 
 		virtual void update( double delta );
 		std::vector<render::Buffer>* getBuffers( void ) const;

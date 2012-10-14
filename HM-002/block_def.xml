@@ -3,8 +3,14 @@
   
   <Block        : new Block
     block_type  : integer, block type to associate parameters with (taken from update::world::block::BlockType)
-    s           : normalised float, texture s coordinate
-    t           : normalised float, texture t coordinate
+    r           : natural number, texture r coordinate, used for any unspecified faces
+    
+    front_r     : natural number, front face  texture r coordinate
+    back_r      : natural number, back face   texture r coordinate
+    right_r     : natural number, right face  texture r coordinate
+    left_r      : natural number, left face   texture r coordinate
+    top_r       : natural number, top face    texture r coordinate
+    bottom_r    : natural number, bottom face texture r coordinate
   />
 -->
 
@@ -19,6 +25,12 @@
   <Block
     block_type = "2"
     r          = "0"
+    
+    front_r  = "1"
+    back_r   = "1"
+    right_r  = "1"
+    left_r   = "1"
+    bottom_r = "2"
   />
 
   <!-- BlockType_Rock -->

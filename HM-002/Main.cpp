@@ -10,7 +10,7 @@
 #include "Camera.h"
 #include "Player.h"
 #include "Entity.h"
-#include "ChunkProvider.h"
+#include "Provider.h"
 #include "Chunk.h"
 #include "World.h"
 #include "State.h"

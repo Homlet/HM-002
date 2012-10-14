@@ -55,6 +55,12 @@
     <Filter Include="Resource Files\textures">
       <UniqueIdentifier>{f5a62d06-10dd-4ab4-9923-78e44cd93dc3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\update\world\chunk">
+      <UniqueIdentifier>{8a543188-b8a0-451a-8bba-7e6555aaa939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\update\world\chunk">
+      <UniqueIdentifier>{4637c156-ebc8-4ea2-8605-b1e65e1213a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -99,11 +105,14 @@
     <ClCompile Include="World.cpp">
       <Filter>Source Files\update</Filter>
     </ClCompile>
-    <ClCompile Include="ChunkProvider.cpp">
-      <Filter>Source Files\update\world</Filter>
-    </ClCompile>
     <ClCompile Include="Loader.cpp">
       <Filter>Source Files\render\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Provider.cpp">
+      <Filter>Source Files\update\world\chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="Generator.cpp">
+      <Filter>Source Files\update\world\chunk</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +158,6 @@
     <ClInclude Include="World.h">
       <Filter>Header Files\update</Filter>
     </ClInclude>
-    <ClInclude Include="ChunkProvider.h">
-      <Filter>Header Files\update\world</Filter>
-    </ClInclude>
     <ClInclude Include="WindowMacros.h">
       <Filter>Header Files\macros</Filter>
     </ClInclude>
@@ -166,6 +172,15 @@
     </ClInclude>
     <ClInclude Include="Buffer.h">
       <Filter>Header Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="OGLMacros.h">
+      <Filter>Header Files\macros</Filter>
+    </ClInclude>
+    <ClInclude Include="Provider.h">
+      <Filter>Header Files\update\world\chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="Generator.h">
+      <Filter>Header Files\update\world\chunk</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

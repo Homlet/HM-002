@@ -23,6 +23,19 @@
 
 
 // ----------------------------------------------------------------------------
+//  GLOBAL MACROS
+// ----------------------------------------------------------------------------
+
+// Object side ids
+#define GBL_FRONT 0
+#define GBL_BACK 1
+#define GBL_RIGHT 2
+#define GBL_LEFT 3
+#define GBL_TOP 4
+#define GBL_BOTTOM 5
+
+
+// ----------------------------------------------------------------------------
 //  FORWARD DECLARATIONS
 // ----------------------------------------------------------------------------
 
@@ -82,6 +95,7 @@ namespace update
 
 	class State;
 	class Entity;
+	class Camera;
 	class Player;
 
 //	namespace collide
@@ -94,6 +108,68 @@ namespace update
 	
 	namespace world
 	{
+		typedef struct {
+			GLint r;
+			GLint front_r, back_r;
+			GLint right_r, left_r;
+			GLint top_r, bottom_r;
+
+			GLint getBlockTextureBySide( int side )
+			{
+				switch ( side )
+				{
+				case GBL_FRONT :
+					if ( front_r == -1 )
+						return r;
+					else
+						return front_r;
+				break;
+					
+				case GBL_BACK :
+					if ( back_r == -1 )
+						return r;
+					else
+						return back_r;
+				break;
+					
+				case GBL_RIGHT :
+					if ( right_r == -1 )
+						return r;
+					else
+						return right_r;
+				break;
+					
+				case GBL_LEFT :
+					if ( left_r == -1 )
+						return r;
+					else
+						return left_r;
+				break;
+					
+				case GBL_TOP :
+					if ( top_r == -1 )
+						return r;
+					else
+						return top_r;
+				break;
+					
+				case GBL_BOTTOM :
+					if ( bottom_r == -1 )
+						return r;
+					else
+						return bottom_r;
+				break;
+
+				default :
+					fprintf(
+						stderr,
+						"Error: Invalid object side value"
+					);
+					return r;
+				break;
+				}
+			};
+		} block_data;
 
 		class Block;
 
@@ -101,23 +177,25 @@ namespace update
 		{
 			enum BlockType
 			{
-				BlockType_Air    = 0,
+				BlockType_Air = 0,
 
-				BlockType_Dirt   = 1,
-				BlockType_Grass  = 2,
-				BlockType_Rock   = 3,
-				BlockType_Sand   = 4,
+			// 1
+				BlockType_Dirt,
+				BlockType_Grass,
+				BlockType_Rock,
+				BlockType_Sand,
 
 				BlockType_Total
 			};
-
-			typedef struct {
-				GLint r;
-			} data;
 		}
 
 		class Chunk;
-		class ChunkProvider;
+
+		namespace chunk
+		{
+			class Provider;
+			class Generator;
+		}
 	}
 }
 

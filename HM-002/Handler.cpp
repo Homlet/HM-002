@@ -2,6 +2,7 @@
 //
 
 #include "WindowMacros.h"
+#include "OGLMacros.h"
 #include "ColorMacros.h"
 
 #include "Base.h"
@@ -33,7 +34,7 @@ Handler::Handler( void ) :
 		75.0f,
 		static_cast<float> (WIN_W) / WIN_H,
 		0.1f,
-		100.0f
+		OGL_FAR_CLIP
 	);
 
 	glGenVertexArrays( 1, &_vertexArrayID );

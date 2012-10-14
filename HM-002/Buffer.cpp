@@ -52,6 +52,16 @@ Buffer::Buffer( std::vector<render::vertex>* data, std::vector<GLushort>* indice
 
 
 // --------------------------------------------------------------------------------------------------------------------
+//  Deletes buffer from GPU ram
+//
+Buffer::~Buffer( void )
+{
+	glDeleteBuffers( 1, &_dataID );
+	glDeleteBuffers( 1, &_indicesID );
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
 //  Sets buffer data
 //
 void Buffer::setData( const vertex* data, int count ) const
