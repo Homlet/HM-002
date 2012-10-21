@@ -17,9 +17,11 @@ namespace render
 		GLuint _uniformLocationMat4MV;
 		GLuint _uniformLocationMat4P;
 		GLuint _uniformLocationVec4Fog_Color;
-		
-		GLuint _uniformLocation1iTexture_Sampler;
-		GLuint _uniformLocation1iTexture_Array_Sampler;
+
+		GLuint _uniformLocationIntTexture_Unit;
+		GLuint _uniformLocationIntTexture_Sampler;
+		GLuint _uniformLocationIntTexture_Array_Sampler;
+
 		GLuint _samplerLocationTexture_Sampler;
 		GLuint _samplerLocationTexture_Array_Sampler;
 	public:
@@ -29,7 +31,8 @@ namespace render
 		void setUniforms(
 			glm::mat4 MV,
 			glm::mat4 P,
-			glm::vec3 Fog_Color
+			glm::vec3 Fog_Color,
+			int Texture_Unit
 		) const;
 		void      unbind( void ) const;
 	};

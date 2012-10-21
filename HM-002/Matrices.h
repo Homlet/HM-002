@@ -30,10 +30,10 @@ namespace render
 			glm::vec3 upVector
 		);
 		void setProjection(
-			float fov,
-			float aspectRatio,
-			float nearClip,
-			float farClip
+			double fov,
+			double aspectRatio,
+			double nearClip,
+			double farClip
 		);
 
 		void computeModelView( void );

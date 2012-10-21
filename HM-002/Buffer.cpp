@@ -11,8 +11,9 @@ using namespace render;
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates empty vertex buffer
 //
-Buffer::Buffer( glm::vec3 pos ) :
-	_position( pos )
+Buffer::Buffer( glm::vec3 pos, int textureUnit ) :
+	_position( pos ),
+	_textureUnit( textureUnit )
 {
 	glGenBuffers( 1, &_dataID );
 	glGenBuffers( 1, &_indicesID );
@@ -22,8 +23,9 @@ Buffer::Buffer( glm::vec3 pos ) :
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates vertex buffer with starting data
 //
-Buffer::Buffer( std::vector<render::vertex>* data, glm::vec3 pos ) :
-	_position( pos )
+Buffer::Buffer( std::vector<render::vertex>* data, glm::vec3 pos, int textureUnit ) :
+	_position( pos ),
+	_textureUnit( textureUnit )
 {
 	glGenBuffers( 1, &_dataID );
 	glGenBuffers( 1, &_indicesID );
@@ -41,8 +43,9 @@ Buffer::Buffer( std::vector<render::vertex>* data, glm::vec3 pos ) :
 // --------------------------------------------------------------------------------------------------------------------
 //  Creates vertex buffer with starting data and indices
 //
-Buffer::Buffer( std::vector<render::vertex>* data, std::vector<GLushort>* indices, glm::vec3 pos ) :
-	_position( pos )
+Buffer::Buffer( std::vector<render::vertex>* data, std::vector<GLushort>* indices, glm::vec3 pos, int textureUnit ) :
+	_position( pos ),
+	_textureUnit( textureUnit )
 {
 	glGenBuffers( 1, &_dataID );
 	glGenBuffers( 1, &_indicesID );
@@ -56,8 +59,8 @@ Buffer::Buffer( std::vector<render::vertex>* data, std::vector<GLushort>* indice
 //
 Buffer::~Buffer( void )
 {
-	glDeleteBuffers( 1, &_dataID );
-	glDeleteBuffers( 1, &_indicesID );
+//	glDeleteBuffers( 1, &_dataID );
+//	glDeleteBuffers( 1, &_indicesID );
 }
 
 
@@ -115,7 +118,7 @@ void Buffer::unbind( void )
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Sets position
+//  Sets position to specified vector value
 //
 void Buffer::setPosition( glm::vec3 pos )
 {
@@ -133,13 +136,31 @@ glm::vec3 Buffer::getPosition( void ) const
 
 
 // --------------------------------------------------------------------------------------------------------------------
+//  Sets texture unit to specified integer value
+//
+void Buffer::setTextureUnit( int textureUnit )
+{
+	_textureUnit = textureUnit;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
+//  Returns texture unit
+//
+int Buffer::getTextureUnit( void ) const
+{
+	return _textureUnit;
+}
+
+
+// --------------------------------------------------------------------------------------------------------------------
 //  Renders the buffer
 //
 void Buffer::render( const GLint type ) const
 {
 	bind();
 	glEnableVertexAttribArray( _attribLocationVertex );
-	glEnableVertexAttribArray( _attribLocationUV );
+	glEnableVertexAttribArray( _attribLocationSTR );
 	glVertexAttribPointer(
 		_attribLocationVertex,
 		3,
@@ -149,7 +170,7 @@ void Buffer::render( const GLint type ) const
 		(void*) 0
 	);
 	glVertexAttribPointer(
-		_attribLocationUV,
+		_attribLocationSTR,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
@@ -165,6 +186,6 @@ void Buffer::render( const GLint type ) const
 	);
 
 	glDisableVertexAttribArray( _attribLocationVertex );
-	glDisableVertexAttribArray( _attribLocationUV );
+	glDisableVertexAttribArray( _attribLocationSTR );
 	unbind();
 }

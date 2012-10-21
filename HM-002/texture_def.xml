@@ -16,8 +16,8 @@
 <Definitions>
   <Array
     name = "blocks"
-    w    = "16"
-    h    = "16"
+    w    = "32"
+    h    = "32"
   >
     <!-- Grass top tile -->
     <Texture

@@ -18,7 +18,7 @@
 #define WIN_GREEN_BITS 8
 #define WIN_ALPHA_BITS 8
 
-#define WIN_DEPTH_BITS 24
+#define WIN_DEPTH_BITS 32
 
 // FSAA samples
 #define WIN_FSAA 2

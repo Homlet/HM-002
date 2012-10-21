@@ -95,21 +95,22 @@ Shader::Shader( const char* vertFilePath, const char* fragFilePath ) :
 	_uniformLocationMat4P             = glGetUniformLocation( _programID, "P" );
 	_uniformLocationVec4Fog_Color     = glGetUniformLocation( _programID, "Fog_Color" );
 	
-	_uniformLocation1iTexture_Sampler = glGetUniformLocation( _programID, "Texture_Sampler" );
-	_uniformLocation1iTexture_Array_Sampler = glGetUniformLocation( _programID, "Texture_Array_Sampler" );
+	_uniformLocationIntTexture_Unit          = glGetUniformLocation( _programID, "Texture_Unit" );
+	_uniformLocationIntTexture_Sampler       = glGetUniformLocation( _programID, "Texture_Sampler" );
+	_uniformLocationIntTexture_Array_Sampler = glGetUniformLocation( _programID, "Texture_Array_Sampler" );
 
 	// Setup texture samplers
 	bind();
 
 	glActiveTexture( GL_TEXTURE0 + 1 );
 	
-	glUniform1i( _uniformLocation1iTexture_Sampler, 1 );
+	glUniform1i( _uniformLocationIntTexture_Sampler, 1 );
 	glGenSamplers( 1, &_samplerLocationTexture_Sampler );
 	glBindSampler( 1, _samplerLocationTexture_Sampler );
 	
 	glActiveTexture( GL_TEXTURE0 + 2 );
 
-	glUniform1i( _uniformLocation1iTexture_Array_Sampler, 2 );
+	glUniform1i( _uniformLocationIntTexture_Array_Sampler, 2 );
 	glGenSamplers( 1, &_samplerLocationTexture_Array_Sampler );
 	glBindSampler( 2, _samplerLocationTexture_Array_Sampler );
 	
@@ -129,13 +130,14 @@ void Shader::bind( void ) const
 
 
 // --------------------------------------------------------------------------------------------------------------------
-//  Sets GLSL uniforms: mat4 MVP
+//  Sets GLSL uniforms: mat4 M(odel)V(iew), mat4 P(rojection), Fog_Color, Texture_Unit
 //
-void Shader::setUniforms( glm::mat4 MV, glm::mat4 P, glm::vec3 Fog_Color) const
+void Shader::setUniforms( glm::mat4 MV, glm::mat4 P, glm::vec3 Fog_Color, int Texture_Unit ) const
 {
-	glUniformMatrix4fv( _uniformLocationMat4MV, 1, GL_FALSE, &MV[0][0] );
-	glUniformMatrix4fv( _uniformLocationMat4P,  1, GL_FALSE,  &P[0][0] );
-	glUniform3fv( _uniformLocationVec4Fog_Color, 1, &Fog_Color[0] );
+	glUniformMatrix4fv( _uniformLocationMat4MV, 1, GL_FALSE, glm::value_ptr( MV ) );
+	glUniformMatrix4fv( _uniformLocationMat4P,  1, GL_FALSE, glm::value_ptr( P ) );
+	glUniform3fv( _uniformLocationVec4Fog_Color, 1, glm::value_ptr( Fog_Color ) );
+	glUniform1iv( _uniformLocationIntTexture_Unit, 1, &Texture_Unit );
 }
 
 

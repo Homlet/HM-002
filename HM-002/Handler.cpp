@@ -31,9 +31,9 @@ Handler::Handler( void ) :
 		glm::vec3( 0, 1, 0 )
 	);
 	_matrices.setProjection(
-		75.0f,
-		static_cast<float> (WIN_W) / WIN_H,
-		0.1f,
+		75.0,
+		(double) WIN_W / WIN_H,
+		0.1,
 		OGL_FAR_CLIP
 	);
 
@@ -45,7 +45,7 @@ Handler::Handler( void ) :
 	
 	glEnable( GL_BLEND );
 	glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-	
+
 	glEnable( GL_TEXTURE_2D );
 	glEnable( GL_TEXTURE_2D_ARRAY );
 	_textures["blocks0"].bind();
@@ -95,7 +95,8 @@ void Handler::render( std::shared_ptr<update::Camera> camera, std::vector<render
 		_shader.setUniforms(
 			_matrices.getModelView(),
 			_matrices.getProjection(),
-			COL_VEC3_FOG
+			COL_VEC3_FOG,
+			b->getTextureUnit()
 		);
 		b->render( GL_TRIANGLES );
 	}

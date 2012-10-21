@@ -65,7 +65,7 @@ std::vector<render::Buffer>* State::getBuffers( void ) const
 	_bufferStack->clear();
 
 	std::vector<render::Buffer>* tempStack = _world->getBuffers();
-	_bufferStack->insert( _bufferStack->end(), tempStack->begin(), tempStack->end() );
+	_bufferStack->insert( _bufferStack->begin(), tempStack->begin(), tempStack->end() );
 	
 	return _bufferStack;
 }

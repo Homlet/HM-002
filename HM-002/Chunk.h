@@ -18,9 +18,9 @@ namespace update
 		class Chunk {
 		private:
 			void _createBlockBuffer(
-				float x,
-				float y,
-				float z,
+				int x,
+				int y,
+				int z,
 				bool front,
 				bool back,
 				bool right,

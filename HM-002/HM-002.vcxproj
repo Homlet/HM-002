@@ -72,7 +72,6 @@
     <ClCompile Include="Chunk.cpp" />
     <ClCompile Include="Generator.cpp" />
     <ClCompile Include="Provider.cpp" />
-    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Loader.cpp" />
@@ -94,7 +93,6 @@
     <ClInclude Include="Generator.h" />
     <ClInclude Include="Provider.h" />
     <ClInclude Include="ColorMacros.h" />
-    <ClInclude Include="Cube.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="OGLMacros.h" />
     <ClInclude Include="Handler.h" />

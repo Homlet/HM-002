@@ -91,7 +91,7 @@ void Player::update( double delta )
 		clamp( _velocity, -PLR_WALK_SPEED, PLR_WALK_SPEED );
 	}
 
-	_move( _velocity * float( delta ) );
+	_move( _velocity * glm::vec3( delta ) );
 
 	// Update look direction
 	int dx, dy,* dxp = &dx,* dyp = &dy;

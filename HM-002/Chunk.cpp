@@ -20,9 +20,9 @@ using namespace update::world;
 //  Returns a vector filled with vertex data for a cube
 //
 void Chunk::_createBlockBuffer(
-	float x,
-	float y,
-	float z,
+	int x,
+	int y,
+	int z,
 	bool front,
 	bool back,
 	bool right,
@@ -35,6 +35,14 @@ void Chunk::_createBlockBuffer(
 )
 {
 	GLfloat r;
+	
+	GLfloat castXNear = (GLfloat) ( x - WLD_BLOCK_SIZE / 2.0f );
+	GLfloat castYNear = (GLfloat) ( y - WLD_BLOCK_SIZE / 2.0f );
+	GLfloat castZNear = (GLfloat) ( z - WLD_BLOCK_SIZE / 2.0f );
+
+	GLfloat castXFar = (GLfloat) ( x + WLD_BLOCK_SIZE / 2.0f );
+	GLfloat castYFar = (GLfloat) ( y + WLD_BLOCK_SIZE / 2.0f );
+	GLfloat castZFar = (GLfloat) ( z + WLD_BLOCK_SIZE / 2.0f );
 
 	// Front
 	if ( front )
@@ -43,10 +51,10 @@ void Chunk::_createBlockBuffer(
 
 		GLushort offset = (GLushort) data->size();
 
-		render::vertex  v0 = { x                 , y                 , z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y                 , z + WLD_BLOCK_SIZE, 1.0f, 0.0f, r };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f, r };
-		render::vertex  v3 = { x                 , y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f, r };
+		render::vertex  v0 = { castXNear, castYNear, castZFar , 0.0f, 0.0f, r };
+		render::vertex  v1 = { castXFar , castYNear, castZFar , 1.0f, 0.0f, r };
+		render::vertex  v2 = { castXFar , castYFar , castZFar , 1.0f, 1.0f, r };
+		render::vertex  v3 = { castXNear, castYFar , castZFar , 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -70,10 +78,10 @@ void Chunk::_createBlockBuffer(
 
 		GLushort offset = (GLushort) data->size();
 
-		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y                 , z                 , 0.0f, 0.0f, r };
-		render::vertex  v1 = { x                 , y                 , z                 , 1.0f, 0.0f, r };
-		render::vertex  v2 = { x                 , y + WLD_BLOCK_SIZE, z                 , 1.0f, 1.0f, r };
-		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z                 , 0.0f, 1.0f, r };
+		render::vertex  v0 = { castXFar , castYNear, castZNear, 0.0f, 0.0f, r };
+		render::vertex  v1 = { castXNear, castYNear, castZNear, 1.0f, 0.0f, r };
+		render::vertex  v2 = { castXNear, castYFar , castZNear, 1.0f, 1.0f, r };
+		render::vertex  v3 = { castXFar , castYFar , castZNear, 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -97,10 +105,10 @@ void Chunk::_createBlockBuffer(
 
 		GLushort offset = (GLushort) data->size();
 		
-		render::vertex  v0 = { x + WLD_BLOCK_SIZE, y                 , z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y                 , z                 , 1.0f, 0.0f, r };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z                 , 1.0f, 1.0f, r };
-		render::vertex  v3 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 1.0f, r };
+		render::vertex  v0 = { castXFar , castYNear, castZFar , 0.0f, 0.0f, r };
+		render::vertex  v1 = { castXFar , castYNear, castZNear, 1.0f, 0.0f, r };
+		render::vertex  v2 = { castXFar , castYFar , castZNear, 1.0f, 1.0f, r };
+		render::vertex  v3 = { castXFar , castYFar , castZFar , 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -124,10 +132,10 @@ void Chunk::_createBlockBuffer(
 
 		GLushort offset = (GLushort) data->size();
 		
-		render::vertex  v0 = { x                 , y                 , z                 , 0.0f, 0.0f, r };
-		render::vertex  v1 = { x                 , y                 , z + WLD_BLOCK_SIZE, 1.0f, 0.0f, r };
-		render::vertex  v2 = { x                 , y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 1.0f, r };
-		render::vertex  v3 = { x                 , y + WLD_BLOCK_SIZE, z                 , 0.0f, 1.0f, r };
+		render::vertex  v0 = { castXNear, castYNear, castZNear, 0.0f, 0.0f, r };
+		render::vertex  v1 = { castXNear, castYNear, castZFar , 1.0f, 0.0f, r };
+		render::vertex  v2 = { castXNear, castYFar , castZFar , 1.0f, 1.0f, r };
+		render::vertex  v3 = { castXNear, castYFar , castZNear, 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -151,10 +159,10 @@ void Chunk::_createBlockBuffer(
 
 		GLushort offset = (GLushort) data->size();
 
-		render::vertex  v0 = { x                 , y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 0.0f, 0.0f, r };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z + WLD_BLOCK_SIZE, 1.0f, 0.0f, r };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y + WLD_BLOCK_SIZE, z                 , 1.0f, 1.0f, r };
-		render::vertex  v3 = { x                 , y + WLD_BLOCK_SIZE, z                 , 0.0f, 1.0f, r };
+		render::vertex  v0 = { castXNear, castYFar , castZFar , 0.0f, 0.0f, r };
+		render::vertex  v1 = { castXFar , castYFar , castZFar , 1.0f, 0.0f, r };
+		render::vertex  v2 = { castXFar , castYFar , castZNear, 1.0f, 1.0f, r };
+		render::vertex  v3 = { castXNear, castYFar , castZNear, 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -178,10 +186,10 @@ void Chunk::_createBlockBuffer(
 
 		GLushort offset = (GLushort) data->size();
 		
-		render::vertex  v0 = { x                 , y                 , z                 , 0.0f, 0.0f, r };
-		render::vertex  v1 = { x + WLD_BLOCK_SIZE, y                 , z                 , 1.0f, 0.0f, r };
-		render::vertex  v2 = { x + WLD_BLOCK_SIZE, y                 , z + WLD_BLOCK_SIZE, 1.0f, 1.0f, r };
-		render::vertex  v3 = { x                 , y                 , z + WLD_BLOCK_SIZE, 0.0f, 1.0f, r };
+		render::vertex  v0 = { castXNear, castYNear, castZNear, 0.0f, 0.0f, r };
+		render::vertex  v1 = { castXFar , castYNear, castZNear, 1.0f, 0.0f, r };
+		render::vertex  v2 = { castXFar , castYNear, castZFar , 1.0f, 1.0f, r };
+		render::vertex  v3 = { castXNear, castYNear, castZFar , 0.0f, 1.0f, r };
 
 		data->push_back( v0 );
 		data->push_back( v1 );
@@ -225,7 +233,7 @@ void Chunk::_rebuild( void )
 				bottom = !getBlockAbsolute( glm::ivec3( _position ) + glm::ivec3( x, y - 1, z ) )->getActive();
 
 				_createBlockBuffer(
-					(float) x, (float) y, (float) z,
+					x, y, z,
 					front, back, right, left, top, bottom,
 					_blocks[x][y][z].getType(),
 					data,
@@ -255,7 +263,7 @@ Chunk::Chunk(
 	_chunkProvider( chunkProvider ),
 	_nullBlock( new Block( block::BlockType_Air, true ) ),
 	_blockData( blockData ),
-	_buffer( new render::Buffer( pos ) ),
+	_buffer( new render::Buffer( pos, 2 ) ),
 	_hasChanged( true ),
 	_position( pos ),
 	_active( active )

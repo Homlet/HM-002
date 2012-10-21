@@ -73,7 +73,7 @@ void Matrices::setView( glm::vec3 cameraPosition, glm::vec3 cameraTarget, glm::v
 // --------------------------------------------------------------------------------------------------------------------
 //  Sets the _projection matrix using glm::perspective. Use only in initialisation or to change the FoV
 //
-void Matrices::setProjection( float fov, float aspectRatio, float nearClip, float farClip )
+void Matrices::setProjection( double fov, double aspectRatio, double nearClip, double farClip )
 {
 	_projection = glm::perspective(
 		fov,

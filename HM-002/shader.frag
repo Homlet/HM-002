@@ -6,12 +6,16 @@ in vec3 tex_coord;
 layout(location = 0) out vec4 color;
 
 uniform vec3 Fog_Color;
+uniform int Texture_Unit;
 uniform sampler2D Texture_Sampler;
 uniform sampler2DArray Texture_Array_Sampler;
 
 void main()
 {
-	if(tex_coord.r < 0.0)
+	if(Texture_Unit == 0)
+	{
+		color = vec4(1.0);
+	} else if(Texture_Unit == 1)
 	{
 		color = mix(
 			vec4(Fog_Color, 1.0),

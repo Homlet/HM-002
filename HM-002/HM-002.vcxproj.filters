@@ -25,12 +25,6 @@
     <Filter Include="Header Files\update">
       <UniqueIdentifier>{ca17529c-a6cd-42f4-abd9-f4491476784f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\render\buffer">
-      <UniqueIdentifier>{e3830e84-bc02-4970-9518-3f7743ef1899}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\render\buffer">
-      <UniqueIdentifier>{8a0875af-415e-4bb9-b672-8268f6e1f7f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\shader">
       <UniqueIdentifier>{a898c3e8-b74c-41ba-b0cd-f2ff7b609d15}</UniqueIdentifier>
     </Filter>
@@ -77,9 +71,6 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>Source Files\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Cube.cpp">
-      <Filter>Source Files\render\buffer</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
       <Filter>Source Files\update</Filter>
@@ -136,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header Files\render</Filter>
-    </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Header Files\render\buffer</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files\update</Filter>
